@@ -1,0 +1,144 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  background-color: #e9e6e2;
+  color: #222;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background-color: #fff;
+  border-bottom: 1px solid #e6e0d8;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo img {
+  display: block;
+  height: 48px;
+  width: auto;
+}
+
+header nav ul {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+header nav a {
+  color: #5d3a1a;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+h1 {
+  color: #5d3a1a; /* Marrón madera oscura */
+}
+
+#inicio,
+#productos {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+#inicio {
+  padding-top: 5px;
+}
+
+#inicio p {
+  font-size: 1.5 rem;
+  line-height: 1;
+  color: #5d3a1a;
+}
+
+#productos {
+  padding: 32px 24px 48px;
+}
+
+#productos h2 {
+  color: #5d3a1a;
+  margin: 0 0 24px;
+}
+
+.grilla-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.tarjeta-mueble {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: #f5f5f5;
+  border: 1px solid #4a4a4a;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px 0 rgba(80, 51, 21, 0.06);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tarjeta-mueble:hover {
+  transform: translateY(-4px) scale(1.022);
+  box-shadow: 0 6px 20px 0 rgba(80, 51, 21, 0.12);
+}
+
+.tarjeta-mueble img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.tarjeta-mueble-cuerpo {
+  padding: 16px 20px 20px;
+}
+
+.tarjeta-mueble h3 {
+  margin: 0 0 8px;
+  color: #5d3a1a;
+}
+
+.tarjeta-mueble p {
+  margin: 0;
+  line-height: 1.45;
+}
+
+footer {
+  box-sizing: border-box;
+  width: calc(100% + 20px);
+  margin-left: -20px;
+  padding: 20px 24px;
+  background-color: #ece8e1;
+}
+
+footer p {
+  margin: 0;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .tarjeta-mueble img {
+    height: 180px;
+  }
+
+  h1 {
+    font-size: 1.6em;
+  }
+}
