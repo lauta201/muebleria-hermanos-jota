@@ -3,118 +3,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mueblería Hermanos Jota — Más de 30 años ofreciendo muebles artesanales de calidad para el hogar. Livings, comedores, dormitorios y oficinas.">
+  <title>Inicio — Mueblería Hermanos Jota</title>
   <link rel="stylesheet" href="style.css">
-  <title>Mueblería Hermanos Jota</title>
 </head>
 <body>
   <header>
-    <a href="#inicio" class="logo">
-      <img src="img/logo.svg" alt="Logo de Hermanos Jota">
+    <a href="index.html" class="logo" aria-label="Inicio — Mueblería Hermanos Jota">
+      <img src="Kit de imágenes/logo.svg" alt="Logo Hermanos Jota">
     </a>
-    <nav>
+
+    <nav id="navPrincipal" class="nav-principal" aria-label="Navegación principal">
       <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#productos">Productos</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
+
+    <a href="#" class="carrito-btn" id="carritoBtn" aria-label="Ver carrito">
+      🛒 <span class="carrito-contador" id="carritoContador">0</span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      id="navToggle"
+      aria-controls="navPrincipal"
+      aria-expanded="false"
+      aria-label="Abrir menú de navegación"
+    >☰</button>
   </header>
+
   <main>
-
-
-    <section id="inicio">
-      <h1>Mueblería Hermanos Jota</h1>
-      <p>
-        En <strong>Mueblería Hermanos Jota</strong>, contamos con más de 30 años de tradición 
-        ofreciendo muebles de calidad y diseño para toda la familia. Nuestra pasión por la carpintería y el buen gusto nos ha convertido en un referente local, llevando calidez y estilo a cada hogar.
-      </p>
+    <section class="hero" aria-labelledby="tituloHero">
+      <div class="hero-contenido">
+        <h1 id="tituloHero">Muebles con alma, hechos para durar</h1>
+        <p>
+          Más de 30 años de tradición artesanal. Cada pieza fabricada con madera
+          seleccionada y el cuidado de quienes aman lo que hacen.
+        </p>
+        <div class="hero-acciones">
+          <a href="productos.html" class="btn btn-primario">Ver catálogo completo</a>
+          <a href="contacto.html" class="btn btn-secundario">Contactarnos</a>
+        </div>
+      </div>
     </section>
-    <section id="productos">
-      <h2>Productos Destacados</h2>
-      <div class="grilla-productos">
-        <article class="tarjeta-mueble">
-          <img src="img/Sofá Patagonia.png" alt="Sofá Patagonia">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Sofá Patagonia</h3>
-            <p>Sofá amplio de líneas contemporáneas, pensado para el living de uso diario.</p>
-          </div>
+
+    <section class="seccion" aria-labelledby="tituloDestacados">
+      <div class="seccion-cabecera">
+        <h2 class="seccion-titulo" id="tituloDestacados">Productos Destacados</h2>
+        <p class="seccion-subtitulo">Piezas seleccionadas de nuestra colección</p>
+      </div>
+
+      <div id="grillaDestacados" class="grilla-productos" aria-live="polite"></div>
+
+      <a href="productos.html" class="seccion-ver-todo">
+        Ver todos los productos →
+      </a>
+    </section>
+
+    <section class="seccion" style="background-color: var(--color-crema);" aria-labelledby="tituloPropuesta">
+      <h2 class="seccion-titulo" id="tituloPropuesta" style="text-align:center; margin-bottom:28px;">
+        ¿Por qué elegirnos?
+      </h2>
+      <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
+
+        <article style="flex:1; min-width:220px; max-width:280px; text-align:center; padding:20px;">
+          <p style="font-size:2.5rem; margin-bottom:12px;">🪵</p>
+          <h3 style="font-family:var(--fuente-titulo); color:var(--color-marron-oscuro); margin-bottom:8px;">
+            Madera Seleccionada
+          </h3>
+          <p style="color:var(--color-texto-suave); font-size:0.9rem;">
+            Trabajamos solo con maderas de calidad, sostenibles y con tratamiento artesanal.
+          </p>
         </article>
-        <article class="tarjeta-mueble">
-          <img src="img/Sillón Copacabana.png" alt="Sillón Copacabana">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Sillón Copacabana</h3>
-            <p>Sillón individual con tapizado cálido y estructura de madera artesanal.</p>
-          </div>
+
+        <article style="flex:1; min-width:220px; max-width:280px; text-align:center; padding:20px;">
+          <p style="font-size:2.5rem; margin-bottom:12px;">🛠️</p>
+          <h3 style="font-family:var(--fuente-titulo); color:var(--color-marron-oscuro); margin-bottom:8px;">
+            Fabricación Propia
+          </h3>
+          <p style="color:var(--color-texto-suave); font-size:0.9rem;">
+            Cada pieza sale de nuestro taller, con control de calidad en cada etapa del proceso.
+          </p>
         </article>
-        <article class="tarjeta-mueble">
-          <img src="img/Butaca Mendoza.png" alt="Butaca Mendoza">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Butaca Mendoza</h3>
-            <p>Butaca de lectura con respaldo envolvente y presencia de taller.</p>
-          </div>
+
+        <article style="flex:1; min-width:220px; max-width:280px; text-align:center; padding:20px;">
+          <p style="font-size:2.5rem; margin-bottom:12px;">🏠</p>
+          <h3 style="font-family:var(--fuente-titulo); color:var(--color-marron-oscuro); margin-bottom:8px;">
+            30 Años de Experiencia
+          </h3>
+          <p style="color:var(--color-texto-suave); font-size:0.9rem;">
+            Una trayectoria de confianza, familia y amor por la carpintería argentina.
+          </p>
         </article>
-        <article class="tarjeta-mueble">
-          <img src="img/Mesa Comedor Pampa.png" alt="Mesa Comedor Pampa">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Mesa Comedor Pampa</h3>
-            <p>Mesa de comedor en madera maciza, ideal para reuniones familiares.</p>
-          </div>
-        </article>
-        <article class="tarjeta-mueble">
-          <img src="img/Mesa de Centro Araucaria.png" alt="Mesa de Centro Araucaria">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Mesa de Centro Araucaria</h3>
-            <p>Mesa de centro baja, protagonista del living con superficie generosa.</p>
-          </div>
-        </article>
-        <article class="tarjeta-mueble">
-          <img src="img/Mesa de Noche Aconcagua.png" alt="Mesa de Noche Aconcagua">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Mesa de Noche Aconcagua</h3>
-            <p>Mesa de luz compacta, con cajón y superficie de apoyo al lado de la cama.</p>
-          </div>
-        </article>
-        <article class="tarjeta-mueble">
-          <img src="img/Escritorio Costa.png" alt="Escritorio Costa">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Escritorio Costa</h3>
-            <p>Escritorio de trabajo con superficie amplia y líneas limpias.</p>
-          </div>
-        </article>
-        <article class="tarjeta-mueble">
-          <img src="img/Silla de Trabajo Belgrano.png" alt="Silla de Trabajo Belgrano">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Silla de Trabajo Belgrano</h3>
-            <p>Silla de oficina con asiento tapizado y respaldo ergonómico.</p>
-          </div>
-        </article>
-        <article class="tarjeta-mueble">
-          <img src="img/Sillas Córdoba.png" alt="Sillas Córdoba">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Sillas Córdoba</h3>
-            <p>Sillas de comedor con respaldo de madera, pensadas para uso diario.</p>
-          </div>
-        </article>
-        <article class="tarjeta-mueble">
-          <img src="img/Aparador Uspallata.png" alt="Aparador Uspallata">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Aparador Uspallata</h3>
-            <p>Aparador de guardado con puertas y estantes, para living o comedor.</p>
-          </div>
-        </article>
-        <article class="tarjeta-mueble">
-          <img src="img/Biblioteca Recoleta.png" alt="Biblioteca Recoleta">
-          <div class="tarjeta-mueble-cuerpo">
-            <h3>Biblioteca Recoleta</h3>
-            <p>Biblioteca de estantes abiertos para libros, objetos y vajilla.</p>
-          </div>
-        </article>
+
       </div>
     </section>
   </main>
+
   <footer>
-    <p>&copy; 2026 Mueblería Hermanos Jota. Todos los derechos reservados.</p>
+    <div class="footer-contenido">
+      <div class="footer-marca">
+        <h2>Mueblería Hermanos Jota</h2>
+        <p>
+          Más de 30 años fabricando muebles artesanales con madera seleccionada.
+          Tradición, calidad y diseño para cada hogar argentino.
+        </p>
+      </div>
+
+      <nav class="footer-links" aria-label="Navegación del pie de página">
+        <h3>Páginas</h3>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="productos.html">Catálogo</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <address class="footer-contacto">
+        <h3>Contacto</h3>
+        <p>📍 Av. San Martín 1240, Mendoza</p>
+        <p>📞 <a href="tel:+542610000000">(261) 000-0000</a></p>
+        <p>✉️ <a href="mailto:info@hermanosjota.com.ar">info@hermanosjota.com.ar</a></p>
+        <p>🕐 Lun–Sáb 9:00 a 18:00</p>
+      </address>
+    </div>
+
+    <div class="footer-base">
+      <p>© 2026 Mueblería Hermanos Jota. Todos los derechos reservados.</p>
+    </div>
   </footer>
+
+  <script src="productos.js"></script>
   <script src="script.js"></script>
+  <script>
+    async function cargarDestacados() {
+      const grilla = document.getElementById('grillaDestacados');
+      if (!grilla) return;
+      grilla.innerHTML = `
+        <div class="cargando" style="grid-column:1/-1;">
+          <div class="spinner"></div>
+          <p>Cargando destacados…</p>
+        </div>
+      `;
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      const destacados = productos.filter((p) => p.destacado).slice(0, 4);
+      grilla.innerHTML = '';
+      destacados.forEach((producto) => {
+        const articulo = document.createElement('article');
+        articulo.className = 'tarjeta-mueble fade-in';
+        articulo.innerHTML = `
+          <figure>
+            <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
+          </figure>
+          <div class="tarjeta-mueble-cuerpo">
+            <span class="tarjeta-etiqueta">${producto.categoria}</span>
+            <h3>${producto.nombre}</h3>
+            <p>${producto.descripcion}</p>
+            <div class="tarjeta-pie">
+              <span class="tarjeta-precio">${new Intl.NumberFormat('es-AR', {
+                style: 'currency', currency: 'ARS', minimumFractionDigits: 0
+              }).format(producto.precio)}</span>
+              <a href="producto.html?id=${producto.id}" class="tarjeta-enlace">
+                Ver detalle →
+              </a>
+            </div>
+          </div>
+        `;
+        grilla.appendChild(articulo);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarDestacados);
+  </script>
 </body>
 </html>
