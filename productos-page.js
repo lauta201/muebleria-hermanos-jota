@@ -1,6 +1,6 @@
 function crearTarjeta(producto) {
-  const articulo = document.createElement('article');
-  articulo.className = 'tarjeta-mueble fade-in';
+  const articulo = document.createElement("article");
+  articulo.className = "tarjeta-mueble fade-in";
   articulo.innerHTML = `
     <figure>
       <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">
@@ -19,15 +19,15 @@ function crearTarjeta(producto) {
 }
 
 function renderizarProductos(lista) {
-  const grilla = document.getElementById('grillaProductos');
-  const sinResultados = document.getElementById('sinResultados');
+  const grilla = document.getElementById("grillaProductos");
+  const sinResultados = document.getElementById("sinResultados");
   if (!grilla) return;
-  grilla.innerHTML = '';
+  grilla.innerHTML = "";
   if (lista.length === 0) {
-    if (sinResultados) sinResultados.classList.remove('oculto');
+    if (sinResultados) sinResultados.classList.remove("oculto");
     return;
   }
-  if (sinResultados) sinResultados.classList.add('oculto');
+  if (sinResultados) sinResultados.classList.add("oculto");
   lista.forEach((producto) => grilla.appendChild(crearTarjeta(producto)));
 }
 
@@ -45,8 +45,8 @@ function filtrarProductos(texto, categoria) {
 }
 
 async function cargarCatalogo() {
-  const grilla = document.getElementById('grillaProductos');
-  const contador = document.getElementById('totalProductos');
+  const grilla = document.getElementById("grillaProductos");
+  const contador = document.getElementById("totalProductos");
   if (!grilla) return;
   grilla.innerHTML = `
     <div class="cargando" style="grid-column: 1 / -1;">
@@ -60,19 +60,20 @@ async function cargarCatalogo() {
 }
 
 function iniciarEventosBuscador() {
-  const inputBusqueda = document.getElementById('inputBusqueda');
-  const selectCategoria = document.getElementById('selectCategoria');
+  const inputBusqueda = document.getElementById("inputBusqueda");
+  const selectCategoria = document.getElementById("selectCategoria");
   if (!inputBusqueda && !selectCategoria) return;
   function aplicarFiltros() {
-    const texto = inputBusqueda ? inputBusqueda.value : '';
-    const categoria = selectCategoria ? selectCategoria.value : '';
+    const texto = inputBusqueda ? inputBusqueda.value : "";
+    const categoria = selectCategoria ? selectCategoria.value : "";
     renderizarProductos(filtrarProductos(texto, categoria));
   }
-  if (inputBusqueda) inputBusqueda.addEventListener('input', aplicarFiltros);
-  if (selectCategoria) selectCategoria.addEventListener('change', aplicarFiltros);
+  if (inputBusqueda) inputBusqueda.addEventListener("input", aplicarFiltros);
+  if (selectCategoria)
+    selectCategoria.addEventListener("change", aplicarFiltros);
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   await cargarCatalogo();
   iniciarEventosBuscador();
 });

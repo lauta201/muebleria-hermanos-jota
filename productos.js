@@ -2,8 +2,10 @@ const productos = [
   {
     id: 1,
     nombre: "Sofá Patagonia",
-    descripcion: "Sofá amplio de líneas contemporáneas, pensado para el living de uso diario.",
-    descripcionCompleta: "El Sofá Patagonia es la pieza central de cualquier living moderno. Con su estructura de madera maciza de eucaliptus y tapizado en tela de alta resistencia, combina elegancia y durabilidad. Sus líneas limpias y contemporáneas se adaptan a cualquier estilo decorativo, mientras que sus cojines de espuma de alta densidad garantizan el máximo confort para largas horas de descanso.",
+    descripcion:
+      "Sofá amplio de líneas contemporáneas, pensado para el living de uso diario.",
+    descripcionCompleta:
+      "El Sofá Patagonia es la pieza central de cualquier living moderno. Con su estructura de madera maciza de eucaliptus y tapizado en tela de alta resistencia, combina elegancia y durabilidad. Sus líneas limpias y contemporáneas se adaptan a cualquier estilo decorativo, mientras que sus cojines de espuma de alta densidad garantizan el máximo confort para largas horas de descanso.",
     categoria: "Living",
     precio: 185000,
     material: "Madera de eucaliptus, tapizado en tela",
@@ -14,8 +16,10 @@ const productos = [
   {
     id: 2,
     nombre: "Sillón Copacabana",
-    descripcion: "Sillón individual con tapizado cálido y estructura de madera artesanal.",
-    descripcionCompleta: "El Sillón Copacabana es una pieza de artesanía pura. Fabricado a mano en nuestro taller con madera de roble seleccionada, su tapizado en cuero sintético de alta calidad le otorga un aspecto premium y un tacto suave. Perfecto para crear un rincón de lectura o complementar cualquier living con carácter y distinción.",
+    descripcion:
+      "Sillón individual con tapizado cálido y estructura de madera artesanal.",
+    descripcionCompleta:
+      "El Sillón Copacabana es una pieza de artesanía pura. Fabricado a mano en nuestro taller con madera de roble seleccionada, su tapizado en cuero sintético de alta calidad le otorga un aspecto premium y un tacto suave. Perfecto para crear un rincón de lectura o complementar cualquier living con carácter y distinción.",
     categoria: "Living",
     precio: 92000,
     material: "Madera de roble, tapizado en cuero sintético",
@@ -26,8 +30,10 @@ const productos = [
   {
     id: 3,
     nombre: "Butaca Mendoza",
-    descripcion: "Butaca de lectura con respaldo envolvente y presencia de taller.",
-    descripcionCompleta: "La Butaca Mendoza fue diseñada para quienes valoran el confort en cada detalle. Su respaldo envolvente abraza naturalmente la postura del cuerpo, ideal para largas sesiones de lectura. Fabricada en madera de pino macizo con acabado natural, su estructura robusta garantiza décadas de uso conservando su belleza original.",
+    descripcion:
+      "Butaca de lectura con respaldo envolvente y presencia de taller.",
+    descripcionCompleta:
+      "La Butaca Mendoza fue diseñada para quienes valoran el confort en cada detalle. Su respaldo envolvente abraza naturalmente la postura del cuerpo, ideal para largas sesiones de lectura. Fabricada en madera de pino macizo con acabado natural, su estructura robusta garantiza décadas de uso conservando su belleza original.",
     categoria: "Living",
     precio: 68000,
     material: "Madera de pino macizo, tapizado en tela",
@@ -38,8 +44,10 @@ const productos = [
   {
     id: 4,
     nombre: "Mesa Comedor Pampa",
-    descripcion: "Mesa de comedor en madera maciza, ideal para reuniones familiares.",
-    descripcionCompleta: "La Mesa Comedor Pampa es un ícono de la carpintería argentina. Fabricada íntegramente en madera maciza de quebracho colorado, su superficie de 200 cm permite reunir a toda la familia. Cada pieza es única, con vetas naturales que hacen de esta mesa una obra de arte funcional. Resiste el uso cotidiano con la elegancia de siempre.",
+    descripcion:
+      "Mesa de comedor en madera maciza, ideal para reuniones familiares.",
+    descripcionCompleta:
+      "La Mesa Comedor Pampa es un ícono de la carpintería argentina. Fabricada íntegramente en madera maciza de quebracho colorado, su superficie de 200 cm permite reunir a toda la familia. Cada pieza es única, con vetas naturales que hacen de esta mesa una obra de arte funcional. Resiste el uso cotidiano con la elegancia de siempre.",
     categoria: "Comedor",
     precio: 210000,
     material: "Madera maciza de quebracho colorado",
@@ -50,8 +58,10 @@ const productos = [
   {
     id: 5,
     nombre: "Mesa de Centro Araucaria",
-    descripcion: "Mesa de centro baja, protagonista del living con superficie generosa.",
-    descripcionCompleta: "La Mesa de Centro Araucaria aporta calidez y carácter al living. Su diseño de doble bandeja en madera de araucaria permite almacenar revistas, controles y objetos decorativos. La combinación de madera natural con patas de acero pintado crea un contraste moderno y sofisticado que eleva cualquier espacio.",
+    descripcion:
+      "Mesa de centro baja, protagonista del living con superficie generosa.",
+    descripcionCompleta:
+      "La Mesa de Centro Araucaria aporta calidez y carácter al living. Su diseño de doble bandeja en madera de araucaria permite almacenar revistas, controles y objetos decorativos. La combinación de madera natural con patas de acero pintado crea un contraste moderno y sofisticado que eleva cualquier espacio.",
     categoria: "Living",
     precio: 54000,
     material: "Madera de araucaria, patas de acero",
@@ -62,8 +72,10 @@ const productos = [
   {
     id: 6,
     nombre: "Mesa de Noche Aconcagua",
-    descripcion: "Mesa de luz compacta, con cajón y superficie de apoyo al lado de la cama.",
-    descripcionCompleta: "La Mesa de Noche Aconcagua es el complemento ideal para cualquier dormitorio. Su diseño compacto con un cajón de corredera suave y una balda inferior optimiza el espacio sin sacrificar el estilo. Fabricada en MDF lacado con bordes de madera maciza, combina modernidad y durabilidad para el descanso cotidiano.",
+    descripcion:
+      "Mesa de luz compacta, con cajón y superficie de apoyo al lado de la cama.",
+    descripcionCompleta:
+      "La Mesa de Noche Aconcagua es el complemento ideal para cualquier dormitorio. Su diseño compacto con un cajón de corredera suave y una balda inferior optimiza el espacio sin sacrificar el estilo. Fabricada en MDF lacado con bordes de madera maciza, combina modernidad y durabilidad para el descanso cotidiano.",
     categoria: "Dormitorio",
     precio: 38000,
     material: "MDF lacado, bordes de madera maciza",
@@ -74,8 +86,10 @@ const productos = [
   {
     id: 7,
     nombre: "Escritorio Costa",
-    descripcion: "Escritorio de trabajo con superficie amplia y líneas limpias.",
-    descripcionCompleta: "El Escritorio Costa fue concebido para el trabajador moderno que exige organización y espacio. Su superficie de 160 cm ofrece lugar para monitor, laptop y materiales. Con un cajón lateral con cerradura y un estante inferior, mantiene el escritorio siempre ordenado. Fabricado en melamina de alta densidad con canto grueso de PVC.",
+    descripcion:
+      "Escritorio de trabajo con superficie amplia y líneas limpias.",
+    descripcionCompleta:
+      "El Escritorio Costa fue concebido para el trabajador moderno que exige organización y espacio. Su superficie de 160 cm ofrece lugar para monitor, laptop y materiales. Con un cajón lateral con cerradura y un estante inferior, mantiene el escritorio siempre ordenado. Fabricado en melamina de alta densidad con canto grueso de PVC.",
     categoria: "Oficina",
     precio: 78000,
     material: "Melamina de alta densidad, canto de PVC grueso",
@@ -87,7 +101,8 @@ const productos = [
     id: 8,
     nombre: "Silla de Trabajo Belgrano",
     descripcion: "Silla de oficina con asiento tapizado y respaldo ergonómico.",
-    descripcionCompleta: "La Silla de Trabajo Belgrano fue diseñada pensando en la salud postural. Su respaldo ergonómico con soporte lumbar ajustable y el asiento de espuma de alta densidad tapizado en tela transpirable hacen de esta silla una aliada para jornadas extendidas. Base de cinco puntas en aluminio con ruedas silenciosas de doble rodamiento.",
+    descripcionCompleta:
+      "La Silla de Trabajo Belgrano fue diseñada pensando en la salud postural. Su respaldo ergonómico con soporte lumbar ajustable y el asiento de espuma de alta densidad tapizado en tela transpirable hacen de esta silla una aliada para jornadas extendidas. Base de cinco puntas en aluminio con ruedas silenciosas de doble rodamiento.",
     categoria: "Oficina",
     precio: 45000,
     material: "Estructura metálica, tapizado en tela transpirable",
@@ -98,8 +113,10 @@ const productos = [
   {
     id: 9,
     nombre: "Sillas Córdoba",
-    descripcion: "Sillas de comedor con respaldo de madera, pensadas para uso diario.",
-    descripcionCompleta: "Las Sillas Córdoba son el complemento perfecto para cualquier mesa de comedor. Su estructura de madera de pino macizo con respaldo en listones horizontales combina resistencia y estética natural. El asiento tapizado en cuerina lavable facilita la limpieza diaria, ideal para familias. Se ofrecen en sets de 4 unidades.",
+    descripcion:
+      "Sillas de comedor con respaldo de madera, pensadas para uso diario.",
+    descripcionCompleta:
+      "Las Sillas Córdoba son el complemento perfecto para cualquier mesa de comedor. Su estructura de madera de pino macizo con respaldo en listones horizontales combina resistencia y estética natural. El asiento tapizado en cuerina lavable facilita la limpieza diaria, ideal para familias. Se ofrecen en sets de 4 unidades.",
     categoria: "Comedor",
     precio: 32000,
     material: "Madera de pino macizo, asiento en cuerina",
@@ -110,8 +127,10 @@ const productos = [
   {
     id: 10,
     nombre: "Aparador Uspallata",
-    descripcion: "Aparador de guardado con puertas y estantes, para living o comedor.",
-    descripcionCompleta: "El Aparador Uspallata es la solución de almacenamiento más elegante para el comedor o living. Con tres puertas batientes y estantes internos regulables, ofrece una capacidad de guardado excepcional. La combinación de madera maciza de cedro con herrajes de bronce envejecido le da un carácter atemporal que mejora con los años.",
+    descripcion:
+      "Aparador de guardado con puertas y estantes, para living o comedor.",
+    descripcionCompleta:
+      "El Aparador Uspallata es la solución de almacenamiento más elegante para el comedor o living. Con tres puertas batientes y estantes internos regulables, ofrece una capacidad de guardado excepcional. La combinación de madera maciza de cedro con herrajes de bronce envejecido le da un carácter atemporal que mejora con los años.",
     categoria: "Comedor",
     precio: 145000,
     material: "Madera maciza de cedro, herrajes de bronce envejecido",
@@ -122,8 +141,10 @@ const productos = [
   {
     id: 11,
     nombre: "Biblioteca Recoleta",
-    descripcion: "Biblioteca de estantes abiertos para libros, objetos y vajilla.",
-    descripcionCompleta: "La Biblioteca Recoleta es más que un mueble de almacenamiento: es un elemento decorativo que transforma cualquier espacio. Sus seis estantes de madera maciza de algarrobo, con distintas alturas, permiten organizar libros, objetos de arte, plantas y vajilla con criterio estético. El acabado en aceite de tung protege la madera naturalmente.",
+    descripcion:
+      "Biblioteca de estantes abiertos para libros, objetos y vajilla.",
+    descripcionCompleta:
+      "La Biblioteca Recoleta es más que un mueble de almacenamiento: es un elemento decorativo que transforma cualquier espacio. Sus seis estantes de madera maciza de algarrobo, con distintas alturas, permiten organizar libros, objetos de arte, plantas y vajilla con criterio estético. El acabado en aceite de tung protege la madera naturalmente.",
     categoria: "Living",
     precio: 118000,
     material: "Madera maciza de algarrobo, acabado en aceite de tung",

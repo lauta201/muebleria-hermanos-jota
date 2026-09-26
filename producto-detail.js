@@ -1,10 +1,10 @@
 function obtenerIdDesdeURL() {
   const params = new URLSearchParams(window.location.search);
-  return parseInt(params.get('id'), 10);
+  return parseInt(params.get("id"), 10);
 }
 
 function renderizarDetalle(producto) {
-  const contenedor = document.getElementById('detalleContenedor');
+  const contenedor = document.getElementById("detalleContenedor");
   if (!contenedor) return;
   contenedor.innerHTML = `
     <div class="detalle-imagen-contenedor fade-in">
@@ -48,26 +48,26 @@ function renderizarDetalle(producto) {
   `;
 
   document.title = `${producto.nombre} — Mueblería Hermanos Jota`;
-  const breadcrumbProducto = document.getElementById('breadcrumbProducto');
+  const breadcrumbProducto = document.getElementById("breadcrumbProducto");
   if (breadcrumbProducto) breadcrumbProducto.textContent = producto.nombre;
 
-  const btnCarrito = document.getElementById('btnAgregarCarrito');
-  const mensajeCarrito = document.getElementById('mensajeCarrito');
-  btnCarrito.addEventListener('click', () => {
+  const btnCarrito = document.getElementById("btnAgregarCarrito");
+  const mensajeCarrito = document.getElementById("mensajeCarrito");
+  btnCarrito.addEventListener("click", () => {
     agregarAlCarrito(producto);
-    mensajeCarrito.classList.add('visible');
+    mensajeCarrito.classList.add("visible");
     btnCarrito.disabled = true;
-    btnCarrito.textContent = '✓ Añadido';
+    btnCarrito.textContent = "✓ Añadido";
     setTimeout(() => {
-      mensajeCarrito.classList.remove('visible');
+      mensajeCarrito.classList.remove("visible");
       btnCarrito.disabled = false;
-      btnCarrito.innerHTML = '🛒 Añadir al Carrito';
+      btnCarrito.innerHTML = "🛒 Añadir al Carrito";
     }, 2500);
   });
 }
 
 function renderizarError() {
-  const contenedor = document.getElementById('detalleContenedor');
+  const contenedor = document.getElementById("detalleContenedor");
   if (!contenedor) return;
   contenedor.innerHTML = `
     <div class="detalle-error" style="grid-column: 1 / -1; width: 100%;">
@@ -79,11 +79,11 @@ function renderizarError() {
       </a>
     </div>
   `;
-  document.title = 'Producto no encontrado — Mueblería Hermanos Jota';
+  document.title = "Producto no encontrado — Mueblería Hermanos Jota";
 }
 
 async function cargarDetalle() {
-  const contenedor = document.getElementById('detalleContenedor');
+  const contenedor = document.getElementById("detalleContenedor");
   if (!contenedor) return;
   contenedor.innerHTML = `
     <div class="cargando" style="width:100%; grid-column: 1/-1;">
@@ -101,6 +101,6 @@ async function cargarDetalle() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   cargarDetalle();
 });
