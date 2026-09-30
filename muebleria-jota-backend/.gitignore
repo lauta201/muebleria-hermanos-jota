@@ -1,0 +1,15 @@
+# Archivos de entorno — nunca subir al repositorio
+.env
+.env.local
+.env.*.local
+
+# Dependencias
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
