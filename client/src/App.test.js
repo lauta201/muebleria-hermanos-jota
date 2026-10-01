@@ -14,8 +14,11 @@ afterEach(() => {
   jest.resetAllMocks();
 });
 
-test("renders home hero title", () => {
+test("renders home hero title", async () => {
   render(<App />);
+
   const titulo = screen.getByText(/Muebles con alma, hechos para durar/i);
   expect(titulo).toBeInTheDocument();
+
+  await screen.findByText(/Productos Destacados/i);
 });
