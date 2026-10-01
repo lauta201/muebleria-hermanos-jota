@@ -22,7 +22,7 @@ function obtenerRutaImagen(imagen) {
     .join("/")}`;
 }
 
-function ProductCard({ producto }) {
+function ProductCard({ producto, onVerDetalle }) {
   const rutaImagen = obtenerRutaImagen(producto.imagen);
 
   return (
@@ -37,8 +37,18 @@ function ProductCard({ producto }) {
         <h3>{producto.nombre}</h3>
         <p>{producto.descripcion}</p>
         <div className="tarjeta-pie">
-          <span className="tarjeta-precio">{formatearPrecio(producto.precio)}</span>
-        </div>
+  <span className="tarjeta-precio">
+    {formatearPrecio(producto.precio)}
+  </span>
+
+  <button
+    type="button"
+    className="tarjeta-ver-detalle"
+    onClick={() => onVerDetalle(producto)}
+  >
+    Ver detalle
+  </button>
+</div>
       </div>
     </article>
   );

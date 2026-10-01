@@ -633,3 +633,142 @@ footer {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+/* ===== Detalle de producto ===== */
+
+.detalle-contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 28px 20px;
+}
+
+.detalle-imagen-contenedor {
+  border-radius: var(--radio);
+  overflow: hidden;
+  box-shadow: var(--sombra-card);
+}
+
+.detalle-imagen {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.detalle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detalle-volver {
+  align-self: flex-start;
+  border: 0;
+  background: transparent;
+  color: var(--color-marron-claro);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.detalle-categoria {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 4px 14px;
+  background-color: var(--color-crema);
+  color: var(--color-marron-claro);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detalle-nombre {
+  font-family: var(--fuente-titulo);
+  font-size: 1.8rem;
+  color: var(--color-marron-oscuro);
+  line-height: 1.25;
+}
+
+.detalle-descripcion {
+  color: var(--color-texto-suave);
+  line-height: 1.7;
+}
+
+.detalle-especificaciones {
+  background-color: var(--color-crema);
+  border-radius: var(--radio);
+  padding: 18px 20px;
+  border: 1px solid var(--color-borde);
+}
+
+.detalle-especificaciones h3 {
+  font-family: var(--fuente-titulo);
+  font-size: 1rem;
+  color: var(--color-marron-oscuro);
+  margin-bottom: 12px;
+}
+
+.especificaciones-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.especificacion-item {
+  display: flex;
+  gap: 8px;
+}
+
+.especificacion-item dt {
+  font-weight: 600;
+  color: var(--color-marron-oscuro);
+}
+
+.especificacion-item dd {
+  margin: 0;
+  color: var(--color-texto-suave);
+}
+
+.detalle-precio-accion {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 8px;
+  border-top: 2px solid var(--color-borde);
+}
+
+.detalle-precio {
+  font-family: var(--fuente-titulo);
+  font-size: 2rem;
+  color: var(--color-marron-oscuro);
+  font-weight: 700;
+}
+
+@media (min-width: 600px) {
+  .detalle-contenedor {
+    padding: 36px 40px;
+  }
+}
+
+@media (min-width: 900px) {
+  .detalle-contenedor {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 48px;
+    padding: 48px;
+  }
+
+  .detalle-imagen-contenedor {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .detalle-info {
+    flex: 1;
+    min-width: 0;
+  }
+}
