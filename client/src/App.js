@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProductList from "./components/ProductList";
 import ProductDetail from "./components/ProductDetail";
+import ContactForm from "./components/ContactForm";
 import "./App.css";
 
 const URL_PRODUCTOS = "http://localhost:3000/api/productos";
@@ -204,6 +205,8 @@ function App() {
             </article>
           </div>
         </section>
+
+        <ContactForm />
       </main>
 
       <Footer />
