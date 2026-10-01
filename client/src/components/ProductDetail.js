@@ -23,7 +23,7 @@ function formatearPrecio(precio) {
       .join("/")}`;
   }
   
-  function ProductDetail({ producto, onVolver }) {
+  function ProductDetail({ producto, onVolver, onAgregarAlCarrito }) {
     return (
       <section className="detalle-contenedor">
         <div className="detalle-imagen-contenedor">
@@ -68,10 +68,18 @@ function formatearPrecio(precio) {
           </div>
   
           <div className="detalle-precio-accion">
-            <p className="detalle-precio">
-              {formatearPrecio(producto.precio)}
-            </p>
-          </div>
+  <p className="detalle-precio">
+    {formatearPrecio(producto.precio)}
+  </p>
+
+  <button
+    type="button"
+    className="btn btn-primario btn-agregar-carrito"
+    onClick={() => onAgregarAlCarrito(producto)}
+  >
+    Agregar al carrito
+  </button>
+</div>
         </div>
       </section>
     );

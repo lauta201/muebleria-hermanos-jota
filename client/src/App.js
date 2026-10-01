@@ -8,13 +8,18 @@ import "./App.css";
 const URL_PRODUCTOS = "http://localhost:3000/api/productos";
 
 function App() {
-  const cantidadCarrito = 0;
-
   const [productos, setProductos] = useState([]);
   const [estadoCarga, setEstadoCarga] = useState("carga");
   const [mensajeError, setMensajeError] = useState("");
   const [mostrarTodos, setMostrarTodos] = useState(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+  const [carrito, setCarrito] = useState([]);
+
+  const cantidadCarrito = carrito.length;
+
+  function agregarAlCarrito(producto) {
+    setCarrito((carritoActual) => [...carritoActual, producto]);
+  }
 
   useEffect(() => {
     const controlador = new AbortController();
@@ -91,6 +96,7 @@ function App() {
           <ProductDetail
             producto={productoSeleccionado}
             onVolver={() => setProductoSeleccionado(null)}
+            onAgregarAlCarrito={agregarAlCarrito}
           />
         ) : (
           <section
