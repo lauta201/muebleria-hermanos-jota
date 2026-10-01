@@ -1,9 +1,57 @@
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ProductList from "./components/ProductList";
 import "./App.css";
+
+const URL_PRODUCTOS = "http://localhost:3000/api/productos";
 
 function App() {
   const cantidadCarrito = 0;
+  const [productos, setProductos] = useState([]);
+  const [estadoCarga, setEstadoCarga] = useState("carga");
+  const [mensajeError, setMensajeError] = useState("");
+  const [mostrarTodos, setMostrarTodos] = useState(false);
+
+  useEffect(() => {
+    const controlador = new AbortController();
+
+    async function cargarProductos() {
+      setEstadoCarga("carga");
+      setMensajeError("");
+
+      try {
+        const respuesta = await fetch(URL_PRODUCTOS, {
+          signal: controlador.signal,
+        });
+
+        if (!respuesta.ok) {
+          throw new Error("Respuesta no válida del servidor");
+        }
+
+        const datos = await respuesta.json();
+        setProductos(Array.isArray(datos) ? datos : []);
+        setEstadoCarga("exito");
+      } catch (error) {
+        if (error.name === "AbortError") {
+          return;
+        }
+
+        setMensajeError(
+          "No pudimos cargar el catálogo en este momento. Verificá que el servidor esté disponible e intentá de nuevo."
+        );
+        setEstadoCarga("error");
+      }
+    }
+
+    cargarProductos();
+
+    return () => controlador.abort();
+  }, []);
+
+  const productosVisibles = mostrarTodos
+    ? productos
+    : productos.filter((producto) => producto.destacado === true);
 
   return (
     <div className="App">
@@ -18,7 +66,11 @@ function App() {
               madera seleccionada y el cuidado de quienes aman lo que hacen.
             </p>
             <div className="hero-acciones">
-              <a href="#productos" className="btn btn-primario">
+              <a
+                href="#productos"
+                className="btn btn-primario"
+                onClick={() => setMostrarTodos(true)}
+              >
                 Ver catálogo completo
               </a>
               <a href="#contacto" className="btn btn-secundario">
@@ -35,22 +87,57 @@ function App() {
         >
           <div className="seccion-cabecera">
             <h2 className="seccion-titulo" id="tituloDestacados">
-              Productos Destacados
+              {mostrarTodos ? "Todos los productos" : "Productos Destacados"}
             </h2>
             <p className="seccion-subtitulo">
-              Piezas seleccionadas de nuestra colección
+              {mostrarTodos
+                ? "Catálogo completo de nuestra colección"
+                : "Piezas seleccionadas de nuestra colección"}
             </p>
           </div>
 
-          <div
-            id="grillaDestacados"
-            className="grilla-productos"
-            aria-live="polite"
-          />
+          {estadoCarga === "carga" ? (
+            <div className="cargando" role="status">
+              <div className="spinner" aria-hidden="true" />
+              <p>Cargando productos…</p>
+            </div>
+          ) : null}
 
-          <a href="#productos" className="seccion-ver-todo">
-            Ver todos los productos →
-          </a>
+          {estadoCarga === "error" ? (
+            <div className="mensaje-error-catalogo" role="alert">
+              <p>{mensajeError}</p>
+            </div>
+          ) : null}
+
+          {estadoCarga === "exito" ? (
+            productosVisibles.length > 0 ? (
+              <ProductList productos={productosVisibles} />
+            ) : (
+              <p className="sin-resultados">
+                No hay productos para mostrar en este momento.
+              </p>
+            )
+          ) : null}
+
+          {estadoCarga === "exito" ? (
+            mostrarTodos ? (
+              <button
+                type="button"
+                className="seccion-ver-todo"
+                onClick={() => setMostrarTodos(false)}
+              >
+                ← Ver solo destacados
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="seccion-ver-todo"
+                onClick={() => setMostrarTodos(true)}
+              >
+                Ver todos los productos →
+              </button>
+            )
+          ) : null}
         </section>
 
         <section
