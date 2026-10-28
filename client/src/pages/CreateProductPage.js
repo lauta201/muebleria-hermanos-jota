@@ -1,7 +1,41 @@
 
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import ProductForm from "../components/ProductForm";
+
+const URL_PRODUCTOS = "http://localhost:3000/api/productos";
 
 function CreateProductPage() {
+  const navigate = useNavigate();
+
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState("");
+
+  async function crearProducto(producto) {
+    setEnviando(true);
+    setError("");
+
+    try {
+      const respuesta = await fetch(URL_PRODUCTOS, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(producto),
+      });
+
+      if (!respuesta.ok) {
+        throw new Error("No se pudo crear el producto.");
+      }
+
+      navigate("/productos");
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setEnviando(false);
+    }
+  }
+
   return (
     <section className="seccion">
       <div className="seccion-cabecera">
@@ -14,21 +48,26 @@ function CreateProductPage() {
         </p>
       </div>
 
-      <div className="formulario-producto">
-        <p>
-          Próximamente podrás registrar nuevos muebles
-          en nuestro catálogo.
-        </p>
-
-        <Link
-          to="/productos"
-          className="btn btn-primario"
+      {error && (
+        <div
+          className="mensaje-error-catalogo"
+          role="alert"
         >
-          Volver al catálogo
-        </Link>
-      </div>
+          <p>{error}</p>
+        </div>
+      )}
+
+      <ProductForm
+        onSubmit={crearProducto}
+        enviando={enviando}
+      />
+
+      <Link to="/productos">
+        Volver al catálogo
+      </Link>
     </section>
   );
 }
 
 export default CreateProductPage;
+

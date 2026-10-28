@@ -44,3 +44,74 @@
   margin-bottom: 12px;
   color: inherit;
 }
+
+/* Formulario de productos - Sprints 5 y 6 */
+
+.formulario-producto {
+  width: 100%;
+  max-width: 650px;
+  margin: 30px auto;
+  padding: 32px;
+  background-color: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-card);
+}
+
+.formulario-producto > div {
+  margin-bottom: 20px;
+}
+
+.formulario-producto label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-marron-oscuro);
+}
+
+.formulario-producto input,
+.formulario-producto textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.95rem;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  border: 2px solid var(--color-borde);
+  border-radius: 8px;
+  outline: none;
+  transition:
+    border-color var(--transicion),
+    box-shadow var(--transicion);
+}
+
+.formulario-producto textarea {
+  resize: vertical;
+}
+
+.formulario-producto input:focus,
+.formulario-producto textarea:focus {
+  background-color: var(--color-blanco);
+  border-color: var(--color-marron-claro);
+  box-shadow: 0 0 0 3px rgba(196, 135, 74, 0.15);
+}
+
+.formulario-producto button[type="submit"] {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  font-size: 1rem;
+}
+
+.formulario-producto button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .formulario-producto {
+    padding: 20px;
+    margin: 20px auto;
+  }
+}
