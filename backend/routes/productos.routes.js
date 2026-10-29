@@ -1,13 +1,48 @@
 import { Router } from "express";
+import { timingSafeEqual } from "node:crypto";
 import mongoose from "mongoose";
 import Product from "../models/Product.js";
 
 const router = Router();
 
-/**
- * GET /api/productos
- * Devuelve todos los productos almacenados en MongoDB.
- */
+// Protege las operaciones que modifican productos.
+function verificarAdministrador(req, res, next) {
+  const claveConfigurada = process.env.ADMIN_API_KEY;
+  const claveRecibida = req.get("x-admin-key");
+
+  // Si falta la configuración, nunca permitir modificaciones.
+  if (!claveConfigurada) {
+    console.error("Falta configurar ADMIN_API_KEY");
+
+    return res.status(503).json({
+      error: "La administración no está disponible",
+    });
+  }
+
+  if (!claveRecibida) {
+    return res.status(401).json({
+      error: "Se requiere una clave de administración",
+    });
+  }
+
+  const esperada = Buffer.from(claveConfigurada, "utf8");
+  const recibida = Buffer.from(claveRecibida, "utf8");
+
+  const claveValida =
+    esperada.length === recibida.length &&
+    timingSafeEqual(esperada, recibida);
+
+  if (!claveValida) {
+    return res.status(403).json({
+      error: "Clave de administración incorrecta",
+    });
+  }
+
+  next();
+}
+
+// GET /api/productos
+// Devuelve todos los productos.
 router.get("/", async (_req, res) => {
   try {
     const productos = await Product.find();
@@ -15,16 +50,15 @@ router.get("/", async (_req, res) => {
     res.status(200).json(productos);
   } catch (error) {
     console.error("Error al obtener productos:", error);
+
     res.status(500).json({
       error: "Error interno al obtener los productos",
     });
   }
 });
 
-/**
- * GET /api/productos/:id
- * Devuelve un producto según su identificador de MongoDB.
- */
+// GET /api/productos/:id
+// Devuelve un producto por su identificador.
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -46,21 +80,19 @@ router.get("/:id", async (req, res) => {
     res.status(200).json(producto);
   } catch (error) {
     console.error("Error al obtener el producto:", error);
+
     res.status(500).json({
       error: "Error interno al obtener el producto",
     });
   }
 });
 
-/**
- * POST /api/productos
- * Crea un producto nuevo en MongoDB.
- */
-router.post("/", async (req, res) => {
+// POST /api/productos
+// Crea un producto. Requiere clave de administración.
+router.post("/", verificarAdministrador, async (req, res) => {
   try {
     const { nombre, descripcion, precio, stock, imagenUrl } = req.body;
 
-    // Validar los campos obligatorios
     if (
       typeof nombre !== "string" ||
       !nombre.trim() ||
@@ -73,7 +105,6 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Crear el producto
     const nuevoProducto = await Product.create({
       nombre: nombre.trim(),
       descripcion,
@@ -84,7 +115,10 @@ router.post("/", async (req, res) => {
 
     res.status(201).json(nuevoProducto);
   } catch (error) {
-    if (error.name === "ValidationError" || error.name === "CastError") {
+    if (
+      error.name === "ValidationError" ||
+      error.name === "CastError"
+    ) {
       return res.status(400).json({
         error: "Los datos del producto no son válidos",
       });
@@ -98,11 +132,9 @@ router.post("/", async (req, res) => {
   }
 });
 
-/**
- * PUT /api/productos/:id
- * Actualiza un producto existente en MongoDB.
- */
-router.put("/:id", async (req, res) => {
+// PUT /api/productos/:id
+// Actualiza un producto. Requiere clave de administración.
+router.put("/:id", verificarAdministrador, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -153,7 +185,10 @@ router.put("/:id", async (req, res) => {
 
     res.status(200).json(productoActualizado);
   } catch (error) {
-    if (error.name === "ValidationError" || error.name === "CastError") {
+    if (
+      error.name === "ValidationError" ||
+      error.name === "CastError"
+    ) {
       return res.status(400).json({
         error: "Los datos enviados no son válidos",
       });
@@ -167,11 +202,9 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-/**
- * DELETE /api/productos/:id
- * Elimina un producto de MongoDB.
- */
-router.delete("/:id", async (req, res) => {
+// DELETE /api/productos/:id
+// Elimina un producto. Requiere clave de administración.
+router.delete("/:id", verificarAdministrador, async (req, res) => {
   try {
     const { id } = req.params;
 

@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import ProductForm from "../components/ProductForm";
 
-const URL_PRODUCTOS = "http://localhost:3000/api/productos";
+import ProductForm from "../components/ProductForm";
+import { useAdminKey } from "../components/AdminKeyProvider";
+
+const URL_PRODUCTOS =
+  process.env.REACT_APP_API_URL ||
+  "http://localhost:3000/api/productos";
 
 function EditProductPage({ onProductoActualizado }) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const solicitarClave = useAdminKey();
 
   const [producto, setProducto] = useState(null);
   const [cargando, setCargando] = useState(true);
@@ -46,8 +51,17 @@ function EditProductPage({ onProductoActualizado }) {
   }, [id]);
 
   async function actualizarProducto(datosProducto) {
-    setEnviando(true);
     setError("");
+
+    // Solicitar la clave antes de enviar la modificación.
+    const clave = await solicitarClave();
+
+    // Si se cancela, el producto no se modifica.
+    if (clave === null) {
+      return;
+    }
+
+    setEnviando(true);
 
     try {
       const respuesta = await fetch(
@@ -56,25 +70,36 @@ function EditProductPage({ onProductoActualizado }) {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            "x-admin-key": clave,
           },
           body: JSON.stringify(datosProducto),
         }
       );
 
       if (!respuesta.ok) {
-        throw new Error("No se pudo actualizar el producto");
+        if (
+          respuesta.status === 401 ||
+          respuesta.status === 403
+        ) {
+          throw new Error(
+            "La clave de administración es incorrecta."
+          );
+        }
+
+        throw new Error("No se pudo actualizar el producto.");
       }
-      
+
       const productoActualizado = await respuesta.json();
-      
+
       if (onProductoActualizado) {
         onProductoActualizado(productoActualizado);
       }
-      
+
       navigate("/productos");
     } catch (error) {
       setError(
-        "No pudimos actualizar el producto. Intentá nuevamente."
+        error.message ||
+          "No pudimos actualizar el producto. Intentá nuevamente."
       );
     } finally {
       setEnviando(false);
@@ -82,13 +107,18 @@ function EditProductPage({ onProductoActualizado }) {
   }
 
   return (
-    <main className="seccion">
-      <h1 className="seccion-titulo">Editar producto</h1>
+    <section className="seccion">
+      <h1 className="seccion-titulo">
+        Editar producto
+      </h1>
 
       {cargando && <p>Cargando producto...</p>}
 
       {error && (
-        <p role="alert" className="mensaje-error-catalogo">
+        <p
+          role="alert"
+          className="mensaje-error-catalogo"
+        >
           {error}
         </p>
       )}
@@ -102,8 +132,10 @@ function EditProductPage({ onProductoActualizado }) {
         />
       )}
 
-      <Link to="/productos">← Volver al catálogo</Link>
-    </main>
+      <Link to="/productos">
+        ← Volver al catálogo
+      </Link>
+    </section>
   );
 }
 

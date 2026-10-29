@@ -4,6 +4,10 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProductList from "./components/ProductList";
+import {
+  AdminKeyProvider,
+  useAdminKey,
+} from "./components/AdminKeyProvider";
 
 import HomePage from "./pages/HomePage";
 import CatalogPage from "./pages/CatalogPage";
@@ -14,10 +18,13 @@ import EditProductPage from "./pages/EditProductPage";
 
 import "./App.css";
 
-const URL_PRODUCTOS = "http://localhost:3000/api/productos";
+const URL_PRODUCTOS =
+  process.env.REACT_APP_API_URL ||
+  "http://localhost:3000/api/productos";
 
-function App() {
+function AppContenido() {
   const navigate = useNavigate();
+  const solicitarClave = useAdminKey();
 
   const [productos, setProductos] = useState([]);
   const [estadoCarga, setEstadoCarga] = useState("carga");
@@ -57,15 +64,28 @@ function App() {
       return;
     }
 
+    const clave = await solicitarClave();
+
+    if (clave === null) {
+      return;
+    }
+
     const id = producto._id || producto.id;
 
     try {
       const respuesta = await fetch(`${URL_PRODUCTOS}/${id}`, {
         method: "DELETE",
+        headers: {
+          "x-admin-key": clave,
+        },
       });
 
       if (!respuesta.ok) {
-        throw new Error("No se pudo eliminar el producto");
+        if (respuesta.status === 401 || respuesta.status === 403) {
+          throw new Error("La clave de administración es incorrecta.");
+        }
+
+        throw new Error("No se pudo eliminar el producto.");
       }
 
       setProductos((productosActuales) =>
@@ -74,10 +94,11 @@ function App() {
         )
       );
 
-      alert("Producto eliminado correctamente.");
+      window.alert("Producto eliminado correctamente.");
     } catch (error) {
-      alert(
-        "No pudimos eliminar el producto. Intentá nuevamente."
+      window.alert(
+        error.message ||
+          "No pudimos eliminar el producto. Intentá nuevamente."
       );
     }
   }
@@ -284,6 +305,14 @@ function App() {
 
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AdminKeyProvider>
+      <AppContenido />
+    </AdminKeyProvider>
   );
 }
 
