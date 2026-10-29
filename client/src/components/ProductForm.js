@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const valoresIniciales = {
   nombre: "",
@@ -13,11 +13,19 @@ function ProductForm({
   productoInicial = valoresIniciales,
   onSubmit,
   enviando = false,
+  textoBoton = "Guardar producto",
 }) {
   const [formData, setFormData] = useState({
     ...valoresIniciales,
     ...productoInicial,
   });
+
+  useEffect(() => {
+    setFormData({
+      ...valoresIniciales,
+      ...productoInicial,
+    });
+  }, [productoInicial]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -133,7 +141,7 @@ function ProductForm({
         className="btn btn-primario"
         disabled={enviando || !onSubmit}
       >
-        {enviando ? "Guardando..." : "Guardar producto"}
+        {enviando ? "Guardando..." : textoBoton}
       </button>
     </form>
   );

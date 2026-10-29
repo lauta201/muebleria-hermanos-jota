@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
@@ -11,6 +10,7 @@ import CatalogPage from "./pages/CatalogPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import ContactPage from "./pages/ContactPage";
 import CreateProductPage from "./pages/CreateProductPage";
+import EditProductPage from "./pages/EditProductPage";
 
 import "./App.css";
 
@@ -28,6 +28,40 @@ function App() {
 
   function agregarAlCarrito(producto) {
     setCarrito((actual) => [...actual, producto]);
+  }
+
+  async function eliminarProducto(producto) {
+    const confirmado = window.confirm(
+      `¿Estás segura de que querés eliminar "${producto.nombre}"? Esta acción no se puede deshacer.`
+    );
+
+    if (!confirmado) {
+      return;
+    }
+
+    const id = producto._id || producto.id;
+
+    try {
+      const respuesta = await fetch(`${URL_PRODUCTOS}/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!respuesta.ok) {
+        throw new Error("No se pudo eliminar el producto");
+      }
+
+      setProductos((productosActuales) =>
+        productosActuales.filter(
+          (item) => (item._id || item.id) !== id
+        )
+      );
+
+      alert("Producto eliminado correctamente.");
+    } catch (error) {
+      alert(
+        "No pudimos eliminar el producto. Intentá nuevamente."
+      );
+    }
   }
 
   useEffect(() => {
@@ -51,7 +85,9 @@ function App() {
         setProductos(Array.isArray(datos) ? datos : []);
         setEstadoCarga("exito");
       } catch (error) {
-        if (error.name === "AbortError") return;
+        if (error.name === "AbortError") {
+          return;
+        }
 
         setMensajeError(
           "No pudimos cargar el catálogo. Verificá que el servidor esté disponible."
@@ -122,8 +158,8 @@ function App() {
                     </div>
                   )}
 
-                  {estadoCarga === "exito" && (
-                    productosDestacados.length > 0 ? (
+                  {estadoCarga === "exito" &&
+                    (productosDestacados.length > 0 ? (
                       <ProductList
                         productos={productosDestacados}
                         onVerDetalle={verDetalle}
@@ -132,8 +168,7 @@ function App() {
                       <p className="sin-resultados">
                         No hay productos destacados.
                       </p>
-                    )
-                  )}
+                    ))}
                 </section>
 
                 <section
@@ -187,6 +222,7 @@ function App() {
                 productos={productos}
                 estadoCarga={estadoCarga}
                 mensajeError={mensajeError}
+                onEliminar={eliminarProducto}
               />
             }
           />
@@ -211,6 +247,11 @@ function App() {
           <Route
             path="/admin/crear-producto"
             element={<CreateProductPage />}
+          />
+
+          <Route
+            path="/admin/editar-producto/:id"
+            element={<EditProductPage />}
           />
         </Routes>
       </main>

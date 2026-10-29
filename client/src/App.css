@@ -115,3 +115,58 @@
     margin: 20px auto;
   }
 }
+
+/* Acciones de administración de productos */
+
+.tarjeta-acciones-admin {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-admin-editar,
+.btn-admin-eliminar {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn-admin-editar {
+  background-color: #f4eee6;
+  color: #653b1e;
+  border: 1px solid #d8c5ad;
+}
+
+.btn-admin-editar:hover {
+  background-color: #e8d8c3;
+}
+
+.btn-admin-eliminar {
+  background-color: #fff;
+  color: #a13d36;
+  border: 1px solid #d8a7a2;
+}
+
+.btn-admin-eliminar:hover {
+  background-color: #f9e6e4;
+}
+
+.btn-admin-editar:focus-visible,
+.btn-admin-eliminar:focus-visible {
+  outline: 3px solid #d4a66a;
+  outline-offset: 3px;
+}
+
+@media (max-width: 360px) {
+  .tarjeta-acciones-admin {
+    flex-direction: column;
+  }
+}

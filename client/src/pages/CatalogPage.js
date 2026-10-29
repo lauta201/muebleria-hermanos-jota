@@ -5,13 +5,19 @@ import ProductList from "../components/ProductList";
 function CatalogPage({
   productos,
   estadoCarga,
-  mensajeError
+  mensajeError,
+  onEliminar,
 }) {
   const navigate = useNavigate();
 
   function verDetalle(producto) {
     const id = producto._id || producto.id;
     navigate(`/productos/${id}`);
+  }
+
+  function editarProducto(producto) {
+    const id = producto._id || producto.id;
+    navigate(`/admin/editar-producto/${id}`);
   }
 
   return (
@@ -56,9 +62,11 @@ function CatalogPage({
       {estadoCarga === "exito" && (
         productos.length > 0 ? (
           <ProductList
-            productos={productos}
-            onVerDetalle={verDetalle}
-          />
+  productos={productos}
+  onVerDetalle={verDetalle}
+  onEditar={editarProducto}
+  onEliminar={onEliminar}
+/>
         ) : (
           <p className="sin-resultados">
             No hay productos disponibles.
