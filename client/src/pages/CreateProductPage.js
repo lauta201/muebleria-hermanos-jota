@@ -5,7 +5,7 @@ import ProductForm from "../components/ProductForm";
 
 const URL_PRODUCTOS = "http://localhost:3000/api/productos";
 
-function CreateProductPage() {
+function CreateProductPage({ onProductoCreado }) {
   const navigate = useNavigate();
 
   const [enviando, setEnviando] = useState(false);
@@ -27,7 +27,13 @@ function CreateProductPage() {
       if (!respuesta.ok) {
         throw new Error("No se pudo crear el producto.");
       }
-
+      
+      const productoCreado = await respuesta.json();
+      
+      if (onProductoCreado) {
+        onProductoCreado(productoCreado);
+      }
+      
       navigate("/productos");
     } catch (error) {
       setError(error.message);

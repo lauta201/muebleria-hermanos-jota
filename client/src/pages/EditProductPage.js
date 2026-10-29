@@ -4,7 +4,7 @@ import ProductForm from "../components/ProductForm";
 
 const URL_PRODUCTOS = "http://localhost:3000/api/productos";
 
-function EditProductPage() {
+function EditProductPage({ onProductoActualizado }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -64,7 +64,13 @@ function EditProductPage() {
       if (!respuesta.ok) {
         throw new Error("No se pudo actualizar el producto");
       }
-
+      
+      const productoActualizado = await respuesta.json();
+      
+      if (onProductoActualizado) {
+        onProductoActualizado(productoActualizado);
+      }
+      
       navigate("/productos");
     } catch (error) {
       setError(

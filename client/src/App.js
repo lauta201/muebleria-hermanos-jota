@@ -30,6 +30,24 @@ function App() {
     setCarrito((actual) => [...actual, producto]);
   }
 
+  function agregarProductoAlCatalogo(productoCreado) {
+    setProductos((productosActuales) => [
+      ...productosActuales,
+      productoCreado,
+    ]);
+  }
+
+  function actualizarProductoEnCatalogo(productoActualizado) {
+    setProductos((productosActuales) =>
+      productosActuales.map((producto) =>
+        (producto._id || producto.id) ===
+        (productoActualizado._id || productoActualizado.id)
+          ? productoActualizado
+          : producto
+      )
+    );
+  }
+
   async function eliminarProducto(producto) {
     const confirmado = window.confirm(
       `¿Estás segura de que querés eliminar "${producto.nombre}"? Esta acción no se puede deshacer.`
@@ -246,12 +264,20 @@ function App() {
 
           <Route
             path="/admin/crear-producto"
-            element={<CreateProductPage />}
+            element={
+              <CreateProductPage
+                onProductoCreado={agregarProductoAlCatalogo}
+              />
+            }
           />
 
           <Route
             path="/admin/editar-producto/:id"
-            element={<EditProductPage />}
+            element={
+              <EditProductPage
+                onProductoActualizado={actualizarProductoEnCatalogo}
+              />
+            }
           />
         </Routes>
       </main>
