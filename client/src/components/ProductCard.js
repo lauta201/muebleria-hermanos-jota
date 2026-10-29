@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function formatearPrecio(precio) {
   return new Intl.NumberFormat("es-AR", {
     style: "currency",
@@ -36,14 +38,30 @@ function ProductCard({
     producto.imagenUrl || producto.imagen
   );
 
+  const [imagenConError, setImagenConError] = useState(false);
+
+  const mostrarImagen = rutaImagen && !imagenConError;
+
   return (
     <article className="tarjeta-mueble">
       <figure>
-        <img
-          src={rutaImagen}
-          alt={producto.nombre}
-          loading="lazy"
-        />
+        {mostrarImagen ? (
+          <img
+            src={rutaImagen}
+            alt={producto.nombre}
+            loading="lazy"
+            onError={() => setImagenConError(true)}
+          />
+        ) : (
+          <div
+            className="producto-sin-imagen"
+            role="img"
+            aria-label={`Imagen no disponible para ${producto.nombre}`}
+          >
+            <span aria-hidden="true">🪑</span>
+            <p>Imagen no disponible</p>
+          </div>
+        )}
       </figure>
 
       <div className="tarjeta-mueble-cuerpo">
