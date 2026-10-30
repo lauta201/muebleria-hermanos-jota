@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import AdminAccessGuard from "./components/AdminAccessGuard";
 import Footer from "./components/Footer";
 import ProductList from "./components/ProductList";
 import {
@@ -283,23 +284,27 @@ function AppContenido() {
             element={<ContactPage />}
           />
 
-          <Route
-            path="/admin/crear-producto"
-            element={
-              <CreateProductPage
-                onProductoCreado={agregarProductoAlCatalogo}
-              />
-            }
-          />
+<Route
+  path="/admin/crear-producto"
+  element={
+    <AdminAccessGuard>
+      <CreateProductPage
+        onProductoCreado={agregarProductoAlCatalogo}
+      />
+    </AdminAccessGuard>
+  }
+/>
 
-          <Route
-            path="/admin/editar-producto/:id"
-            element={
-              <EditProductPage
-                onProductoActualizado={actualizarProductoEnCatalogo}
-              />
-            }
-          />
+<Route
+  path="/admin/editar-producto/:id"
+  element={
+    <AdminAccessGuard>
+      <EditProductPage
+        onProductoActualizado={actualizarProductoEnCatalogo}
+      />
+    </AdminAccessGuard>
+  }
+/>
         </Routes>
       </main>
 
