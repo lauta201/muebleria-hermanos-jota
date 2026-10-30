@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
 
 const API_URL =
   process.env.REACT_APP_API_URL ||
