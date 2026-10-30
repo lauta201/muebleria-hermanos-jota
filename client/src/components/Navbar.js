@@ -1,4 +1,6 @@
+
 import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 function Navbar({ cantidadCarrito }) {
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -13,41 +15,76 @@ function Navbar({ cantidadCarrito }) {
 
   return (
     <header>
-      <a
-        href="#inicio"
+      <Link
+        to="/"
         className="logo"
         aria-label="Inicio — Mueblería Hermanos Jota"
         onClick={cerrarMenu}
       >
-        <img src="/logo.svg" alt="Logo Hermanos Jota" />
-      </a>
+        <img
+          src="/logo.svg"
+          alt="Logo Hermanos Jota"
+        />
+      </Link>
 
       <nav
         id="navPrincipal"
-        className={menuAbierto ? "nav-principal abierto" : "nav-principal"}
+        className={
+          menuAbierto
+            ? "nav-principal abierto"
+            : "nav-principal"
+        }
         aria-label="Navegación principal"
       >
         <ul>
           <li>
-            <a href="#inicio" onClick={cerrarMenu} aria-current="page">
+            <NavLink
+              to="/"
+              end
+              onClick={cerrarMenu}
+            >
               Inicio
-            </a>
+            </NavLink>
           </li>
+
           <li>
-            <a href="#productos" onClick={cerrarMenu}>
+            <NavLink
+              to="/productos"
+              onClick={cerrarMenu}
+            >
               Productos
-            </a>
+            </NavLink>
           </li>
+
           <li>
-            <a href="#contacto" onClick={cerrarMenu}>
+            <NavLink
+              to="/contacto"
+              onClick={cerrarMenu}
+            >
               Contacto
-            </a>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/admin/crear-producto"
+              onClick={cerrarMenu}
+            >
+              Administración
+            </NavLink>
           </li>
         </ul>
       </nav>
 
-      <button className="carrito-btn" type="button" aria-label="Ver carrito">
-        🛒 <span className="carrito-contador">{cantidadCarrito}</span>
+      <button
+        className="carrito-btn"
+        type="button"
+        aria-label="Ver carrito"
+      >
+        🛒
+        <span className="carrito-contador">
+          {cantidadCarrito}
+        </span>
       </button>
 
       <button
@@ -56,7 +93,9 @@ function Navbar({ cantidadCarrito }) {
         aria-controls="navPrincipal"
         aria-expanded={menuAbierto}
         aria-label={
-          menuAbierto ? "Cerrar menú de navegación" : "Abrir menú de navegación"
+          menuAbierto
+            ? "Cerrar menú de navegación"
+            : "Abrir menú de navegación"
         }
         onClick={toggleMenu}
       >
@@ -67,3 +106,4 @@ function Navbar({ cantidadCarrito }) {
 }
 
 export default Navbar;
+
