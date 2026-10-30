@@ -9,10 +9,32 @@ const URL_VERIFICACION = API_URL.replace(
   "/api/admin/verificar-acceso"
 );
 
-function AdminAccessGuard({ children }) {
-  const [autorizado, setAutorizado] = useState(
-    () => sessionStorage.getItem("adminAccess") === "true"
+const CLAVE_TOKEN = "adminSessionToken";
+const CLAVE_EXPIRACION = "adminSessionExpiration";
+
+function obtenerSesion() {
+  const token = sessionStorage.getItem(CLAVE_TOKEN);
+  const expiracion = Number(
+    sessionStorage.getItem(CLAVE_EXPIRACION)
   );
+
+  if (
+    !token ||
+    !Number.isFinite(expiracion) ||
+    expiracion * 1000 <= Date.now()
+  ) {
+    sessionStorage.removeItem(CLAVE_TOKEN);
+    sessionStorage.removeItem(CLAVE_EXPIRACION);
+    sessionStorage.removeItem("adminAccess");
+
+    return false;
+  }
+
+  return true;
+}
+
+function AdminAccessGuard({ children }) {
+  const [autorizado, setAutorizado] = useState(obtenerSesion);
   const [contrasena, setContrasena] = useState("");
   const [error, setError] = useState("");
   const [verificando, setVerificando] = useState(false);
@@ -44,22 +66,67 @@ function AdminAccessGuard({ children }) {
 
       const datos = await respuesta.json();
 
-      if (!datos.autorizado) {
-        throw new Error("Acceso denegado.");
+      if (
+        !datos.autorizado ||
+        typeof datos.token !== "string" ||
+        !Number.isFinite(datos.expiraEn)
+      ) {
+        throw new Error(
+          "El servidor no devolvió una sesión válida."
+        );
       }
 
-      sessionStorage.setItem("adminAccess", "true");
+      sessionStorage.setItem(CLAVE_TOKEN, datos.token);
+      sessionStorage.setItem(
+        CLAVE_EXPIRACION,
+        String(datos.expiraEn)
+      );
+
+      sessionStorage.removeItem("adminAccess");
+
       setAutorizado(true);
       setContrasena("");
     } catch (error) {
-      setError(error.message);
+      setError(
+        error.message || "No se pudo iniciar sesión."
+      );
     } finally {
       setVerificando(false);
     }
   }
 
+  function cerrarSesion() {
+    sessionStorage.removeItem(CLAVE_TOKEN);
+    sessionStorage.removeItem(CLAVE_EXPIRACION);
+    sessionStorage.removeItem("adminAccess");
+
+    setAutorizado(false);
+    setContrasena("");
+    setError("");
+  }
+
   if (autorizado) {
-    return children;
+    return (
+      <>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: "12px 24px",
+          }}
+        >
+          <button
+            type="button"
+            onClick={cerrarSesion}
+            className="btn"
+          >
+            Cerrar sesión
+          </button>
+        </div>
+
+        {children}
+      </>
+    );
   }
 
   return (

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import ProductForm from "../components/ProductForm";
-import { useAdminKey } from "../components/AdminKeyProvider";
 
 const URL_PRODUCTOS =
   process.env.REACT_APP_API_URL ||
@@ -10,7 +9,6 @@ const URL_PRODUCTOS =
 
 function CreateProductPage({ onProductoCreado }) {
   const navigate = useNavigate();
-  const solicitarClave = useAdminKey();
 
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState("");
@@ -18,11 +16,14 @@ function CreateProductPage({ onProductoCreado }) {
   async function crearProducto(producto) {
     setError("");
 
-    // Solicitar autorización antes de crear el producto.
-    const clave = await solicitarClave();
+    const token = sessionStorage.getItem(
+      "adminSessionToken"
+    );
 
-    // Si la usuaria cancela, no enviamos ninguna solicitud.
-    if (clave === null) {
+    if (!token) {
+      setError(
+        "Tu sesión de administración no está activa. Volvé a ingresar."
+      );
       return;
     }
 
@@ -33,15 +34,21 @@ function CreateProductPage({ onProductoCreado }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-admin-key": clave,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(producto),
       });
 
       if (!respuesta.ok) {
-        if (respuesta.status === 401 || respuesta.status === 403) {
+        if (
+          respuesta.status === 401 ||
+          respuesta.status === 403
+        ) {
+          sessionStorage.removeItem("adminSessionToken");
+          sessionStorage.removeItem("adminSessionExpiration");
+
           throw new Error(
-            "La clave de administración es incorrecta."
+            "Tu sesión de administración venció o no es válida. Volvé a ingresar."
           );
         }
 

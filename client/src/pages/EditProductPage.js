@@ -53,11 +53,11 @@ function EditProductPage({ onProductoActualizado }) {
   async function actualizarProducto(datosProducto) {
     setError("");
 
-    // Solicitar la clave antes de enviar la modificación.
-    const clave = await solicitarClave();
+    // Solicita la contraseña de Administración.
+    // El backend la verifica y devuelve un token autorizado.
+    const token = await solicitarClave();
 
-    // Si se cancela, el producto no se modifica.
-    if (clave === null) {
+    if (token === null) {
       return;
     }
 
@@ -70,7 +70,7 @@ function EditProductPage({ onProductoActualizado }) {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            "x-admin-key": clave,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(datosProducto),
         }
@@ -82,11 +82,13 @@ function EditProductPage({ onProductoActualizado }) {
           respuesta.status === 403
         ) {
           throw new Error(
-            "La clave de administración es incorrecta."
+            "La autorización de Administración no es válida o venció."
           );
         }
 
-        throw new Error("No se pudo actualizar el producto.");
+        throw new Error(
+          "No se pudo actualizar el producto."
+        );
       }
 
       const productoActualizado = await respuesta.json();

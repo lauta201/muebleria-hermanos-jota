@@ -8,6 +8,7 @@ import logger from "./middlewares/logger.js";
 import productosRouter from "./routes/productos.routes.js";
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import { crearSesionAdmin } from "./utils/adminSession.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,7 +36,7 @@ app.post("/api/admin/verificar-acceso", (req, res) => {
     });
   }
 
-  // Comparar las contraseñas sin comparar directamente los textos
+  // Comparar las contraseñas mediante hashes
   const hashIngresado = createHash("sha256")
     .update(contrasena)
     .digest();
@@ -55,14 +56,31 @@ app.post("/api/admin/verificar-acceso", (req, res) => {
     });
   }
 
-  return res.json({
-    autorizado: true,
-  });
+  // Crear una sesión temporal después de verificar la contraseña
+  try {
+    const sesion = crearSesionAdmin();
+
+    return res.status(200).json({
+      autorizado: true,
+      token: sesion.token,
+      expiraEn: sesion.expiraEn,
+    });
+  } catch (error) {
+    console.error(
+      "No se pudo crear la sesión administrativa:",
+      error.message
+    );
+
+    return res.status(503).json({
+      error: "La administración no está disponible.",
+    });
+  }
 });
 
-// Rutas
+// Rutas de productos
 app.use("/api/productos", productosRouter);
 
+// Verificar el estado de la API
 app.get("/", (_req, res) => {
   res.json({
     mensaje: "API Mueblería Jota funcionando",
@@ -71,6 +89,8 @@ app.get("/", (_req, res) => {
 
 // Manejo de rutas inexistentes
 app.use(notFound);
+
+// Manejo global de errores
 app.use(errorHandler);
 
 // Conectar a MongoDB antes de iniciar Express

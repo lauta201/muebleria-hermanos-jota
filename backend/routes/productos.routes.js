@@ -2,15 +2,34 @@ import { Router } from "express";
 import { timingSafeEqual } from "node:crypto";
 import mongoose from "mongoose";
 import Product from "../models/Product.js";
+import { verificarSesionAdmin } from "../utils/adminSession.js";
 
 const router = Router();
 
 // Protege las operaciones que modifican productos.
 function verificarAdministrador(req, res, next) {
+  // Permitir el acceso mediante una sesión administrativa válida.
+  const autorizacion = req.get("Authorization");
+
+  if (autorizacion) {
+    const coincidencia = /^Bearer (.+)$/i.exec(autorizacion);
+
+    if (
+      coincidencia &&
+      verificarSesionAdmin(coincidencia[1])
+    ) {
+      return next();
+    }
+
+    return res.status(403).json({
+      error: "La sesión administrativa es inválida o expiró.",
+    });
+  }
+
+  // Mantener la autorización tradicional mediante la clave de API.
   const claveConfigurada = process.env.ADMIN_API_KEY;
   const claveRecibida = req.get("x-admin-key");
 
-  // Si falta la configuración, nunca permitir modificaciones.
   if (!claveConfigurada) {
     console.error("Falta configurar ADMIN_API_KEY");
 
@@ -21,7 +40,7 @@ function verificarAdministrador(req, res, next) {
 
   if (!claveRecibida) {
     return res.status(401).json({
-      error: "Se requiere una clave de administración",
+      error: "Se requiere autorización de administración",
     });
   }
 

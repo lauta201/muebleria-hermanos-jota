@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import AdminAccessGuard from "./components/AdminAccessGuard";
@@ -25,12 +30,22 @@ const URL_PRODUCTOS =
 
 function AppContenido() {
   const navigate = useNavigate();
+  const location = useLocation();
   const solicitarClave = useAdminKey();
 
   const [productos, setProductos] = useState([]);
   const [estadoCarga, setEstadoCarga] = useState("carga");
   const [mensajeError, setMensajeError] = useState("");
   const [carrito, setCarrito] = useState([]);
+
+  // Cerrar la sesión administrativa cuando se abandona Administración.
+  useEffect(() => {
+    if (location.pathname !== "/admin/crear-producto") {
+      sessionStorage.removeItem("adminSessionToken");
+      sessionStorage.removeItem("adminSessionExpiration");
+      sessionStorage.removeItem("adminAccess");
+    }
+  }, [location.pathname]);
 
   const cantidadCarrito = carrito.length;
 
@@ -65,9 +80,11 @@ function AppContenido() {
       return;
     }
 
-    const clave = await solicitarClave();
+    // Solicitar la contraseña de Administración.
+    // El backend la verifica y devuelve un token autorizado.
+    const token = await solicitarClave();
 
-    if (clave === null) {
+    if (token === null) {
       return;
     }
 
@@ -77,13 +94,18 @@ function AppContenido() {
       const respuesta = await fetch(`${URL_PRODUCTOS}/${id}`, {
         method: "DELETE",
         headers: {
-          "x-admin-key": clave,
+          Authorization: `Bearer ${token}`,
         },
       });
 
       if (!respuesta.ok) {
-        if (respuesta.status === 401 || respuesta.status === 403) {
-          throw new Error("La clave de administración es incorrecta.");
+        if (
+          respuesta.status === 401 ||
+          respuesta.status === 403
+        ) {
+          throw new Error(
+            "La autorización de Administración no es válida o venció."
+          );
         }
 
         throw new Error("No se pudo eliminar el producto.");
@@ -284,27 +306,27 @@ function AppContenido() {
             element={<ContactPage />}
           />
 
-<Route
-  path="/admin/crear-producto"
-  element={
-    <AdminAccessGuard>
-      <CreateProductPage
-        onProductoCreado={agregarProductoAlCatalogo}
-      />
-    </AdminAccessGuard>
-  }
-/>
+          {/* Crear productos: requiere iniciar sesión en Administración */}
+          <Route
+            path="/admin/crear-producto"
+            element={
+              <AdminAccessGuard>
+                <CreateProductPage
+                  onProductoCreado={agregarProductoAlCatalogo}
+                />
+              </AdminAccessGuard>
+            }
+          />
 
-<Route
-  path="/admin/editar-producto/:id"
-  element={
-    <AdminAccessGuard>
-      <EditProductPage
-        onProductoActualizado={actualizarProductoEnCatalogo}
-      />
-    </AdminAccessGuard>
-  }
-/>
+          {/* Editar productos: solicita la contraseña al guardar */}
+          <Route
+            path="/admin/editar-producto/:id"
+            element={
+              <EditProductPage
+                onProductoActualizado={actualizarProductoEnCatalogo}
+              />
+            }
+          />
         </Routes>
       </main>
 
