@@ -64,6 +64,15 @@ function Navbar({ cantidadCarrito }) {
               Contacto
             </NavLink>
           </li>
+
+          <li>
+            <NavLink
+              to="/admin/crear-producto"
+              onClick={cerrarMenu}
+            >
+              Administración
+            </NavLink>
+          </li>
         </ul>
       </nav>
 
