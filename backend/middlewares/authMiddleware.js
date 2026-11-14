@@ -71,3 +71,26 @@ export async function verificarToken(req, res, next) {
     });
   }
 }
+
+
+/**
+ * Permite continuar únicamente a los usuarios
+ * autenticados que tengan el rol administrador.
+ *
+ * Debe ejecutarse después de verificarToken.
+ */
+export function verificarAdmin(req, res, next) {
+  if (!req.usuario) {
+    return res.status(401).json({
+      mensaje: "Debés iniciar sesión para continuar.",
+    });
+  }
+
+  if (!req.usuario.roles?.includes("admin")) {
+    return res.status(403).json({
+      mensaje: "No tenés permisos de administrador.",
+    });
+  }
+
+  next();
+}

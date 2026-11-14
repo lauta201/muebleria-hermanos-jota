@@ -1,19 +1,17 @@
+
 import { useEffect, useState } from "react";
 import {
   Routes,
   Route,
   useNavigate,
-  useLocation,
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import AdminAccessGuard from "./components/AdminAccessGuard";
 import Footer from "./components/Footer";
 import ProductList from "./components/ProductList";
-import {
-  AdminKeyProvider,
-  useAdminKey,
-} from "./components/AdminKeyProvider";
+
+import { useAuth } from "./context/AuthContext";
 
 import HomePage from "./pages/HomePage";
 import CatalogPage from "./pages/CatalogPage";
@@ -21,6 +19,8 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import ContactPage from "./pages/ContactPage";
 import CreateProductPage from "./pages/CreateProductPage";
 import EditProductPage from "./pages/EditProductPage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 import "./App.css";
 
@@ -30,29 +30,25 @@ const URL_PRODUCTOS =
 
 function AppContenido() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const solicitarClave = useAdminKey();
+  const { currentUser } = useAuth();
 
   const [productos, setProductos] = useState([]);
   const [estadoCarga, setEstadoCarga] = useState("carga");
   const [mensajeError, setMensajeError] = useState("");
   const [carrito, setCarrito] = useState([]);
 
-  // Cerrar la sesión administrativa cuando se abandona Administración.
-  useEffect(() => {
-    if (location.pathname !== "/admin/crear-producto") {
-      sessionStorage.removeItem("adminSessionToken");
-      sessionStorage.removeItem("adminSessionExpiration");
-      sessionStorage.removeItem("adminAccess");
-    }
-  }, [location.pathname]);
+  // Verificar el rol del usuario autenticado.
+  const esAdministrador =
+    currentUser?.roles?.includes("admin") ?? false;
 
+  // Estado básico del carrito.
   const cantidadCarrito = carrito.length;
 
   function agregarAlCarrito(producto) {
     setCarrito((actual) => [...actual, producto]);
   }
 
+  // Agregar un producto al catálogo.
   function agregarProductoAlCatalogo(productoCreado) {
     setProductos((productosActuales) => [
       ...productosActuales,
@@ -60,6 +56,7 @@ function AppContenido() {
     ]);
   }
 
+  // Actualizar un producto en el catálogo.
   function actualizarProductoEnCatalogo(productoActualizado) {
     setProductos((productosActuales) =>
       productosActuales.map((producto) =>
@@ -71,7 +68,25 @@ function AppContenido() {
     );
   }
 
+  // Eliminar un producto utilizando el JWT del administrador.
   async function eliminarProducto(producto) {
+    // Comprobar los permisos antes de continuar.
+    if (!esAdministrador) {
+      window.alert(
+        "Tu cuenta no tiene permisos para eliminar productos."
+      );
+      return;
+    }
+
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      window.alert(
+        "Debés iniciar sesión como administrador para eliminar productos."
+      );
+      return;
+    }
+
     const confirmado = window.confirm(
       `¿Estás segura de que querés eliminar "${producto.nombre}"? Esta acción no se puede deshacer.`
     );
@@ -80,37 +95,44 @@ function AppContenido() {
       return;
     }
 
-    // Solicitar la contraseña de Administración.
-    // El backend la verifica y devuelve un token autorizado.
-    const token = await solicitarClave();
-
-    if (token === null) {
-      return;
-    }
-
     const id = producto._id || producto.id;
 
     try {
-      const respuesta = await fetch(`${URL_PRODUCTOS}/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const respuesta = await fetch(
+        `${URL_PRODUCTOS}/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!respuesta.ok) {
-        if (
-          respuesta.status === 401 ||
-          respuesta.status === 403
-        ) {
+        if (respuesta.status === 401) {
           throw new Error(
-            "La autorización de Administración no es válida o venció."
+            "Tu sesión expiró o no es válida. Volvé a iniciar sesión."
           );
         }
 
-        throw new Error("No se pudo eliminar el producto.");
+        if (respuesta.status === 403) {
+          throw new Error(
+            "Tu cuenta no tiene permisos para eliminar productos."
+          );
+        }
+
+        const datosError = await respuesta
+          .json()
+          .catch(() => null);
+
+        throw new Error(
+          datosError?.mensaje ||
+            datosError?.error ||
+            "No se pudo eliminar el producto."
+        );
       }
 
+      // Actualizar el catálogo solo si el backend eliminó el producto.
       setProductos((productosActuales) =>
         productosActuales.filter(
           (item) => (item._id || item.id) !== id
@@ -126,6 +148,7 @@ function AppContenido() {
     }
   }
 
+  // Cargar los productos desde MongoDB.
   useEffect(() => {
     const controlador = new AbortController();
 
@@ -154,6 +177,7 @@ function AppContenido() {
         setMensajeError(
           "No pudimos cargar el catálogo. Verificá que el servidor esté disponible."
         );
+
         setEstadoCarga("error");
       }
     }
@@ -163,10 +187,12 @@ function AppContenido() {
     return () => controlador.abort();
   }, []);
 
+  // Seleccionar los productos destacados.
   const productosDestacados = productos.filter(
     (producto) => producto.destacado === true
   );
 
+  // Navegar al detalle de un producto.
   function verDetalle(producto) {
     navigate(`/productos/${producto._id || producto.id}`);
   }
@@ -177,12 +203,14 @@ function AppContenido() {
 
       <main>
         <Routes>
+          {/* Página principal */}
           <Route
             path="/"
             element={
               <>
                 <HomePage />
 
+                {/* Productos destacados */}
                 <section
                   className="seccion"
                   id="productos"
@@ -202,11 +230,15 @@ function AppContenido() {
                   </div>
 
                   {estadoCarga === "carga" && (
-                    <div className="cargando" role="status">
+                    <div
+                      className="cargando"
+                      role="status"
+                    >
                       <div
                         className="spinner"
                         aria-hidden="true"
                       />
+
                       <p>Cargando productos...</p>
                     </div>
                   )}
@@ -233,6 +265,7 @@ function AppContenido() {
                     ))}
                 </section>
 
+                {/* Propuesta de valor */}
                 <section
                   className="seccion seccion-propuesta"
                   aria-labelledby="tituloPropuesta"
@@ -246,8 +279,12 @@ function AppContenido() {
 
                   <div className="propuesta-lista">
                     <article className="propuesta-item">
-                      <p className="propuesta-icono">🪵</p>
+                      <p className="propuesta-icono">
+                        🪵
+                      </p>
+
                       <h3>Madera Seleccionada</h3>
+
                       <p>
                         Trabajamos solo con maderas de calidad,
                         sostenibles y con tratamiento artesanal.
@@ -255,8 +292,12 @@ function AppContenido() {
                     </article>
 
                     <article className="propuesta-item">
-                      <p className="propuesta-icono">🛠️</p>
+                      <p className="propuesta-icono">
+                        🛠️
+                      </p>
+
                       <h3>Fabricación Propia</h3>
+
                       <p>
                         Cada pieza sale de nuestro taller,
                         con control de calidad en cada etapa.
@@ -264,8 +305,12 @@ function AppContenido() {
                     </article>
 
                     <article className="propuesta-item">
-                      <p className="propuesta-icono">🏠</p>
+                      <p className="propuesta-icono">
+                        🏠
+                      </p>
+
                       <h3>30 Años de Experiencia</h3>
+
                       <p>
                         Una trayectoria de confianza, familia
                         y amor por la carpintería argentina.
@@ -277,6 +322,7 @@ function AppContenido() {
             }
           />
 
+          {/* Catálogo de productos */}
           <Route
             path="/productos"
             element={
@@ -289,6 +335,7 @@ function AppContenido() {
             }
           />
 
+          {/* Detalle de producto */}
           <Route
             path="/productos/:id"
             element={
@@ -301,12 +348,25 @@ function AppContenido() {
             }
           />
 
+          {/* Contacto */}
           <Route
             path="/contacto"
             element={<ContactPage />}
           />
 
-          {/* Crear productos: requiere iniciar sesión en Administración */}
+          {/* Registro de usuarios */}
+          <Route
+            path="/registro"
+            element={<RegisterPage />}
+          />
+
+          {/* Inicio de sesión */}
+          <Route
+            path="/login"
+            element={<LoginPage />}
+          />
+
+          {/* Administración: crear productos */}
           <Route
             path="/admin/crear-producto"
             element={
@@ -318,13 +378,17 @@ function AppContenido() {
             }
           />
 
-          {/* Editar productos: solicita la contraseña al guardar */}
+          {/* Administración: editar productos */}
           <Route
             path="/admin/editar-producto/:id"
             element={
-              <EditProductPage
-                onProductoActualizado={actualizarProductoEnCatalogo}
-              />
+              <AdminAccessGuard>
+                <EditProductPage
+                  onProductoActualizado={
+                    actualizarProductoEnCatalogo
+                  }
+                />
+              </AdminAccessGuard>
             }
           />
         </Routes>
@@ -336,11 +400,7 @@ function AppContenido() {
 }
 
 function App() {
-  return (
-    <AdminKeyProvider>
-      <AppContenido />
-    </AdminKeyProvider>
-  );
+  return <AppContenido />;
 }
 
 export default App;

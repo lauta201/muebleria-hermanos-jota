@@ -1,6 +1,7 @@
 
 import { useNavigate } from "react-router-dom";
 import ProductList from "../components/ProductList";
+import { useAuth } from "../context/AuthContext";
 
 function CatalogPage({
   productos,
@@ -9,13 +10,24 @@ function CatalogPage({
   onEliminar,
 }) {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
+  // Comprobar si el usuario tiene permisos administrativos.
+  const esAdministrador =
+    currentUser?.roles?.includes("admin") ?? false;
+
+  // Navegar al detalle del producto.
   function verDetalle(producto) {
     const id = producto._id || producto.id;
     navigate(`/productos/${id}`);
   }
 
+  // Navegar a la edición del producto.
   function editarProducto(producto) {
+    if (!esAdministrador) {
+      return;
+    }
+
     const id = producto._id || producto.id;
     navigate(`/admin/editar-producto/${id}`);
   }
@@ -59,20 +71,23 @@ function CatalogPage({
         </div>
       )}
 
-      {estadoCarga === "exito" && (
-        productos.length > 0 ? (
+      {estadoCarga === "exito" &&
+        (productos.length > 0 ? (
           <ProductList
-  productos={productos}
-  onVerDetalle={verDetalle}
-  onEditar={editarProducto}
-  onEliminar={onEliminar}
-/>
+            productos={productos}
+            onVerDetalle={verDetalle}
+            onEditar={
+              esAdministrador ? editarProducto : undefined
+            }
+            onEliminar={
+              esAdministrador ? onEliminar : undefined
+            }
+          />
         ) : (
           <p className="sin-resultados">
             No hay productos disponibles.
           </p>
-        )
-      )}
+        ))}
     </section>
   );
 }
