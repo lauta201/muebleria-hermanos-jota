@@ -1,6 +1,7 @@
 
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 
 // Registrar un nuevo usuario
 export async function registrarUsuario(req, res) {
@@ -70,6 +71,87 @@ export async function registrarUsuario(req, res) {
 
     return res.status(500).json({
       mensaje: "Error interno al registrar el usuario.",
+    });
+  }
+}
+
+
+export async function iniciarSesion(req, res) {
+  try {
+    const { email, password } = req.body ?? {};
+
+    if (
+      typeof email !== "string" ||
+      !email.trim() ||
+      typeof password !== "string" ||
+      !password
+    ) {
+      return res.status(400).json({
+        mensaje: "Ingresá tu correo y contraseña.",
+      });
+    }
+
+    // Buscar al usuario incluyendo el hash de la contraseña
+    const usuario = await User.findOne({
+      email: email.trim().toLowerCase(),
+    }).select("+password");
+
+    if (!usuario) {
+      return res.status(401).json({
+        mensaje: "Credenciales inválidas.",
+      });
+    }
+
+    // Comparar la contraseña con el hash almacenado
+    const contrasenaValida = await bcrypt.compare(
+      password,
+      usuario.password
+    );
+
+    if (!contrasenaValida) {
+      return res.status(401).json({
+        mensaje: "Credenciales inválidas.",
+      });
+    }
+
+    // La clave secreta debe estar configurada en el servidor
+    if (!process.env.JWT_SECRET) {
+      console.error("Falta configurar JWT_SECRET");
+
+      return res.status(503).json({
+        mensaje: "El inicio de sesión no está disponible.",
+      });
+    }
+
+    // Generar un token firmado con vigencia de una hora
+    const token = jwt.sign(
+      {
+        id: usuario._id.toString(),
+        username: usuario.username,
+        roles: usuario.roles,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+        algorithm: "HS256",
+      }
+    );
+
+    return res.status(200).json({
+      mensaje: "Inicio de sesión exitoso.",
+      token,
+      usuario: {
+        id: usuario._id,
+        username: usuario.username,
+        email: usuario.email,
+        roles: usuario.roles,
+      },
+    });
+  } catch (error) {
+    console.error("Error al iniciar sesión:", error);
+
+    return res.status(500).json({
+      mensaje: "Error interno al iniciar sesión.",
     });
   }
 }
