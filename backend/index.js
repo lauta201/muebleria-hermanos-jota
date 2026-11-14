@@ -6,6 +6,7 @@ import { createHash, timingSafeEqual } from "node:crypto";
 import conectarDB from "./config/db.js";
 import logger from "./middlewares/logger.js";
 import productosRouter from "./routes/productos.routes.js";
+import authRouter from "./routes/auth.routes.js";
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import { crearSesionAdmin } from "./utils/adminSession.js";
@@ -79,6 +80,8 @@ app.post("/api/admin/verificar-acceso", (req, res) => {
 
 // Rutas de productos
 app.use("/api/productos", productosRouter);
+// Rutas de autenticación de usuarios
+app.use("/api/usuarios", authRouter);
 
 // Verificar el estado de la API
 app.get("/", (_req, res) => {
