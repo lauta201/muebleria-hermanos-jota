@@ -1,0 +1,384 @@
+
+/* =========================================
+   NAVEGACIÓN DE CUENTA — HERMANOS JOTA
+   ========================================= */
+
+/* Contenedor del icono de usuario */
+
+.cuenta-contenedor {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    order: 1;
+  }
+  
+  /* Botón de usuario */
+  
+  .cuenta-boton {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  
+    border: 1px solid var(--color-borde);
+    border-radius: 50%;
+  
+    background-color: var(--color-blanco);
+    color: var(--color-marron-oscuro);
+  
+    cursor: pointer;
+  
+    transition:
+      background-color var(--transicion),
+      border-color var(--transicion);
+  }
+  
+  .cuenta-boton:hover,
+  .cuenta-boton[aria-expanded="true"] {
+    background-color: var(--color-crema);
+    border-color: var(--color-marron-claro);
+  }
+  
+  .cuenta-boton:focus-visible,
+  .cuenta-enlace:focus-visible {
+    outline: 3px solid var(--color-caramelo);
+    outline-offset: 3px;
+  }
+  
+  
+  /* =========================================
+     MENÚ DESPLEGABLE DE CUENTA
+     ========================================= */
+  
+  .cuenta-desplegable {
+    position: absolute;
+    top: calc(100% + 13px);
+    right: 0;
+    z-index: 200;
+  
+    width: 260px;
+    max-width: calc(100vw - 24px);
+  
+    padding: 0;
+  
+    background-color: var(--color-blanco);
+    border: 1px solid var(--color-borde);
+    border-radius: 10px;
+  
+    box-shadow: 0 12px 32px rgba(74, 44, 10, 0.15);
+  
+    overflow: hidden;
+  }
+  
+  /* Encabezado del menú */
+  
+  .cuenta-encabezado {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  
+    padding: 20px;
+  
+    border-bottom: 1px solid var(--color-borde);
+  }
+  
+  .cuenta-etiqueta {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+  
+    color: var(--color-marron-claro);
+  }
+  
+  .cuenta-encabezado strong {
+    font-family: var(--fuente-titulo);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.4;
+  
+    color: var(--color-marron-oscuro);
+  
+    overflow-wrap: anywhere;
+  }
+  
+  .cuenta-encabezado p {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  
+    color: var(--color-texto-suave);
+  }
+  
+  
+  /* =========================================
+     OPCIONES DEL MENÚ
+     ========================================= */
+  
+  .cuenta-opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  
+    padding: 10px;
+  }
+  
+  .cuenta-enlace {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    width: 100%;
+    min-height: 43px;
+  
+    padding: 11px 14px;
+  
+    border: 1px solid transparent;
+    border-radius: 6px;
+  
+    background-color: transparent;
+    color: var(--color-marron-oscuro);
+  
+    font-family: var(--fuente-cuerpo);
+    font-size: 0.85rem;
+    font-weight: 600;
+  
+    text-align: center;
+    text-decoration: none;
+  
+    cursor: pointer;
+  
+    transition:
+      background-color var(--transicion),
+      color var(--transicion);
+  }
+  
+  .cuenta-enlace:hover {
+    background-color: var(--color-crema);
+  }
+  
+  /* Acción principal: iniciar sesión */
+  
+  .cuenta-enlace-principal {
+    background-color: var(--color-marron-oscuro);
+    color: var(--color-blanco);
+  }
+  
+  .cuenta-enlace-principal:hover {
+    background-color: var(--color-marron-medio);
+    color: var(--color-blanco);
+  }
+  
+  /* Cerrar sesión */
+  
+  .cuenta-salir {
+    color: var(--color-texto-suave);
+  }
+  
+  
+  /* =========================================
+     DISTRIBUCIÓN GENERAL
+     ========================================= */
+  
+  /*
+    El logo queda a la izquierda.
+    Los enlaces se centran en escritorio.
+    Usuario y carrito se agrupan a la derecha.
+  */
+  
+  header > .logo {
+    margin-right: auto;
+  }
+  
+  .cuenta-contenedor {
+    order: 1;
+  }
+  
+  .carrito-btn {
+    order: 2;
+  }
+  
+  .nav-toggle {
+    order: 3;
+  }
+  
+  .nav-principal {
+    order: 4;
+  }
+  
+  
+  /* =========================================
+     ESCRITORIO — 850 PX O MÁS
+     ========================================= */
+  
+  @media (min-width: 850px) {
+    header {
+      position: sticky;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+    }
+  
+    /* Logo a la izquierda */
+  
+    header > .logo {
+      margin-right: auto;
+      flex-shrink: 0;
+    }
+  
+    /* Navegación centrada de forma independiente */
+  
+    header > .nav-principal {
+      display: block;
+  
+      position: absolute;
+      top: 50%;
+      left: 50%;
+  
+      width: auto;
+      padding: 0;
+  
+      transform: translate(-50%, -50%);
+  
+      background: transparent;
+      border: none;
+  
+      order: 1;
+    }
+  
+    .nav-principal ul {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 4px;
+    }
+  
+    .nav-principal a {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+  
+    /* Usuario y carrito juntos a la derecha */
+  
+    header > .cuenta-contenedor {
+      order: 2;
+      margin: 0;
+    }
+  
+    header > .carrito-btn {
+      order: 3;
+      margin: 0;
+    }
+  
+    /* Ocultar hamburguesa en escritorio */
+  
+    header > .nav-toggle {
+      display: none;
+    }
+  }
+  
+  
+  /* =========================================
+     TABLETS — 600 A 849 PX
+     ========================================= */
+  
+  @media (min-width: 600px) and (max-width: 849px) {
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+  
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  
+    header > .logo {
+      margin-right: auto;
+    }
+  
+    /* Usar navegación desplegable */
+  
+    header > .nav-principal {
+      display: none;
+  
+      position: absolute;
+      top: 100%;
+      left: 0;
+  
+      width: 100%;
+      padding: 12px 0;
+  
+      background-color: var(--color-blanco);
+      border-bottom: 2px solid var(--color-borde);
+  
+      order: 4;
+    }
+  
+    header > .nav-principal.abierto {
+      display: block;
+    }
+  
+    .nav-principal ul {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .nav-principal a {
+      display: block;
+      padding: 12px 24px;
+      border-radius: 0;
+      font-size: 0.92rem;
+    }
+  
+    header > .cuenta-contenedor {
+      order: 1;
+    }
+  
+    header > .carrito-btn {
+      order: 2;
+    }
+  
+    header > .nav-toggle {
+      display: flex;
+      order: 3;
+    }
+  }
+  
+  
+  /* =========================================
+     CELULARES — MENOS DE 600 PX
+     ========================================= */
+  
+  @media (max-width: 599px) {
+    header {
+      gap: 8px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  
+    header > .logo {
+      margin-right: auto;
+    }
+  
+    .logo img {
+      height: 38px;
+    }
+  
+    .cuenta-boton {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .carrito-btn {
+      padding: 8px 10px;
+    }
+  
+    .cuenta-desplegable {
+      right: -54px;
+    }
+  }
+  
