@@ -5,8 +5,11 @@ import cors from "cors";
 
 import conectarDB from "./config/db.js";
 import logger from "./middlewares/logger.js";
+
 import productosRouter from "./routes/productos.routes.js";
 import authRouter from "./routes/auth.routes.js";
+import pedidosRouter from "./routes/pedidos.routes.js";
+
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js";
 
@@ -23,6 +26,9 @@ app.use("/api/productos", productosRouter);
 
 // Rutas de autenticación de usuarios
 app.use("/api/usuarios", authRouter);
+
+// Rutas de pedidos
+app.use("/api/pedidos", pedidosRouter);
 
 // Verificar el estado de la API
 app.get("/", (_req, res) => {
