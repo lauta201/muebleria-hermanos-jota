@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import ScrollToTop from "./components/ScrollToTop";
 import AdminAccessGuard from "./components/AdminAccessGuard";
 import Footer from "./components/Footer";
 import ProductList from "./components/ProductList";
@@ -200,6 +201,9 @@ function AppContenido() {
 
   return (
     <div className="App">
+      {/* Volver arriba al cambiar de página */}
+      <ScrollToTop />
+
       <Navbar cantidadCarrito={cantidadCarrito} />
 
       <main>

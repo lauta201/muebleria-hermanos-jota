@@ -1,3 +1,6 @@
+
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer>
@@ -10,37 +13,54 @@ function Footer() {
           </p>
         </div>
 
-        <nav className="footer-links" aria-label="Navegación del pie de página">
+        <nav
+          className="footer-links"
+          aria-label="Navegación del pie de página"
+        >
           <h3>Páginas</h3>
+
           <ul>
             <li>
-              <a href="#inicio">Inicio</a>
+              <Link to="/">Inicio</Link>
             </li>
+
             <li>
-              <a href="#productos">Catálogo</a>
+              <Link to="/productos">Catálogo</Link>
             </li>
+
             <li>
-              <a href="#contacto">Contacto</a>
+              <Link to="/contacto">Contacto</Link>
             </li>
           </ul>
         </nav>
 
         <address className="footer-contacto" id="contacto">
           <h3>Contacto</h3>
+
           <p>📍 Av. San Martín 1240, Mendoza</p>
+
           <p>
-            📞 <a href="tel:+542610000000">(261) 000-0000</a>
+            📞{" "}
+            <a href="tel:+542610000000">
+              (261) 000-0000
+            </a>
           </p>
+
           <p>
             ✉️{" "}
-            <a href="mailto:info@hermanosjota.com.ar">info@hermanosjota.com.ar</a>
+            <a href="mailto:info@hermanosjota.com.ar">
+              info@hermanosjota.com.ar
+            </a>
           </p>
+
           <p>🕐 Lun–Sáb 9:00 a 18:00</p>
         </address>
       </div>
 
       <div className="footer-base">
-        <p>© 2026 Mueblería Hermanos Jota. Todos los derechos reservados.</p>
+        <p>
+          © 2026 Mueblería Hermanos Jota. Todos los derechos reservados.
+        </p>
       </div>
     </footer>
   );
