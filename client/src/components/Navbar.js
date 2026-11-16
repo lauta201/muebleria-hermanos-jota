@@ -71,6 +71,7 @@ function Navbar({ cantidadCarrito }) {
     };
   }, [menuCuentaAbierto]);
 
+  // Cerrar la sesión y regresar al inicio.
   function cerrarSesion() {
     logout();
     setMenuCuentaAbierto(false);
@@ -196,6 +197,18 @@ function Navbar({ cantidadCarrito }) {
               <div className="cuenta-opciones">
                 {currentUser ? (
                   <>
+                    {/* Perfil del usuario autenticado */}
+                    <Link
+                      to="/perfil"
+                      className="cuenta-enlace"
+                      onClick={() =>
+                        setMenuCuentaAbierto(false)
+                      }
+                    >
+                      Mi perfil
+                    </Link>
+
+                    {/* Acceso exclusivo de administradores */}
                     {esAdministrador && (
                       <Link
                         to="/admin/crear-producto"
@@ -208,6 +221,7 @@ function Navbar({ cantidadCarrito }) {
                       </Link>
                     )}
 
+                    {/* Cerrar sesión */}
                     <button
                       type="button"
                       className="cuenta-enlace cuenta-salir"
@@ -218,6 +232,7 @@ function Navbar({ cantidadCarrito }) {
                   </>
                 ) : (
                   <>
+                    {/* Iniciar sesión */}
                     <Link
                       to="/login"
                       className="cuenta-enlace cuenta-enlace-principal"
@@ -228,6 +243,7 @@ function Navbar({ cantidadCarrito }) {
                       Iniciar sesión
                     </Link>
 
+                    {/* Crear cuenta */}
                     <Link
                       to="/registro"
                       className="cuenta-enlace"

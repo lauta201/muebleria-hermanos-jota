@@ -23,6 +23,7 @@ import EditProductPage from "./pages/EditProductPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import CartPage from "./pages/CartPage";
+import ProfilePage from "./pages/ProfilePage";
 
 import "./App.css";
 
@@ -358,6 +359,12 @@ function AppContenido() {
 <Route
   path="/carrito"
   element={<CartPage />}
+/>
+
+{/* Perfil del usuario */}
+<Route
+  path="/perfil"
+  element={<ProfilePage />}
 />
 
           {/* Registro de usuarios */}
