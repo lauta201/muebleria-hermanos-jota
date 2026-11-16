@@ -1,173 +1,153 @@
 <div align="center">
 
-# 🪑 Mueblería Hermanos Jota
+# Mueblería Hermanos Jota
 
-### E-commerce full stack · React + Node.js/Express + MongoDB
+### E-commerce MERN · React + Node.js/Express + MongoDB Atlas
 
-Proyecto de curso de **Desarrollo Full Stack**: un catálogo de muebles con frontend en React, una API REST en Express y persistencia en MongoDB Atlas.
+Aplicación full stack de un catálogo de muebles con autenticación de usuarios, carrito de compras, registro de pedidos y panel de administración, desarrollada como entrega final de los Sprints 7 y 8 del curso de **Desarrollo Full Stack**.
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?logo=reactrouter&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
+![JWT](https://img.shields.io/badge/Auth-JWT-000000?logo=jsonwebtokens&logoColor=white)
 
-[Descripción](#-descripción) •
-[Publicado](#-proyecto-publicado) •
-[Arquitectura](#-arquitectura) •
-[Instalación](#-instalación-y-ejecución) •
-[Funcionalidades](#-funcionalidades-principales) •
-[API](#-documentación-de-la-api) •
-[Administración](#-administración-y-seguridad) •
-[Decisiones](#-decisiones-de-arquitectura)
+[Descripción](#descripción) •
+[Enlaces](#enlaces-públicos) •
+[Arquitectura](#arquitectura) •
+[Instalación](#instalación-y-ejecución) •
+[Funcionalidades](#funcionalidades) •
+[API](#documentación-de-la-api) •
+[Seguridad](#seguridad) •
+[Decisiones](#decisiones-de-arquitectura)
 
 </div>
 
 ---
 
-## 📖 Descripción
+## Descripción
 
-**Mueblería Hermanos Jota** es un e-commerce desarrollado como proyecto de un curso de Desarrollo Full Stack. Es un **monorepo** que reúne en un mismo repositorio:
+**Mueblería Hermanos Jota** es un e-commerce construido con el stack MERN (MongoDB, Express, React y Node.js). Es un **monorepo** que reúne en un mismo repositorio:
 
-- 🖥️ **`/client`**: el frontend, desarrollado con React mediante Create React App.
-- ⚙️ **`/backend`**: la API REST, desarrollada con Node.js + Express, con persistencia en MongoDB Atlas mediante Mongoose.
+- **`/client`**: frontend en React, creado con Create React App.
+- **`/backend`**: API REST con Node.js y Express, con persistencia en MongoDB Atlas mediante Mongoose.
 
-El frontend consume el catálogo de productos que expone la API y permite explorarlo, ver el detalle de cada producto, agregarlo al carrito y enviar un formulario de contacto. Además, incluye una sección de Administración para crear, editar y eliminar productos.
+Los usuarios pueden explorar el catálogo, ver el detalle de cada producto, registrarse, iniciar sesión, armar un carrito, finalizar una compra y consultar su historial de pedidos. Los administradores, además, gestionan el catálogo (crear, editar y eliminar productos).
 
 ---
 
-## 👥 Integrantes
+## Integrantes
 
 | Integrante |
 |:-----------|
-| Lautaro Iturrieta |
-| Evelyn Noya Fraga |
-| Matheo Dougan |
+| **Lautaro Iturrieta** |
+| **Evelyn Noya Fraga** |
 
 ---
 
-## 🌐 Proyecto publicado
+## Enlaces públicos
 
-| Servicio | Plataforma | Enlace |
-|:---------|:-----------|:-------|
-| 🖥️ Frontend | Vercel | [muebleria-hermanos-jota-client.vercel.app](https://muebleria-hermanos-jota-client.vercel.app) |
-| ⚙️ Backend | Render | [muebleria-hermanos-jota-scrd.onrender.com](https://muebleria-hermanos-jota-scrd.onrender.com) |
-| 📡 API de productos | Render | [/api/productos](https://muebleria-hermanos-jota-scrd.onrender.com/api/productos) |
+| Recurso | Plataforma | Enlace |
+|:--------|:-----------|:-------|
+| Repositorio | GitHub | [github.com/lauta201/muebleria-hermanos-jota](https://github.com/lauta201/muebleria-hermanos-jota) |
+| Frontend | Vercel | [muebleria-hermanos-jota-client.vercel.app](https://muebleria-hermanos-jota-client.vercel.app) |
+| Backend | Render | [muebleria-hermanos-jota-scrd.onrender.com](https://muebleria-hermanos-jota-scrd.onrender.com) |
+| API de productos | Render | [/api/productos](https://muebleria-hermanos-jota-scrd.onrender.com/api/productos) |
 
-> ⏳ El backend se aloja en el plan gratuito de Render: tras un período de inactividad, la primera respuesta puede tardar unos segundos.
+La aplicación se encuentra desplegada y se verificó el inicio de sesión desde el frontend público, conectado al backend en Render y a la base de datos en MongoDB Atlas.
 
----
-
-## 🧰 Tecnologías
-
-<table>
-  <tr>
-    <th align="left">🖥️ Frontend (<code>/client</code>)</th>
-    <th align="left">⚙️ Backend (<code>/backend</code>)</th>
-    <th align="left">☁️ Despliegue</th>
-  </tr>
-  <tr>
-    <td valign="top">
-      <ul>
-        <li>React 19</li>
-        <li>Create React App / react-scripts</li>
-        <li>React Router</li>
-        <li>JavaScript</li>
-        <li>HTML5</li>
-        <li>CSS3</li>
-        <li>Fetch API</li>
-      </ul>
-    </td>
-    <td valign="top">
-      <ul>
-        <li>Node.js</li>
-        <li>Express 5</li>
-        <li>MongoDB Atlas</li>
-        <li>Mongoose</li>
-        <li>CORS</li>
-        <li>Dotenv</li>
-        <li>Nodemon</li>
-        <li>ES Modules</li>
-      </ul>
-    </td>
-    <td valign="top">
-      <ul>
-        <li>Vercel (frontend)</li>
-        <li>Render (backend)</li>
-        <li>MongoDB Atlas (base de datos)</li>
-      </ul>
-    </td>
-  </tr>
-</table>
+> El backend se aloja en el plan gratuito de Render: tras un período de inactividad, la primera respuesta puede demorar unos segundos.
 
 ---
 
-## 🏗️ Arquitectura
+## Tecnologías
 
-El proyecto está organizado como un monorepo con dos aplicaciones independientes que se comunican por HTTP. React consume la API REST, Express procesa las solicitudes, Mongoose consulta y modifica los documentos y MongoDB Atlas almacena los productos de forma persistente.
+| Frontend (`/client`) | Backend (`/backend`) | Despliegue |
+|:---------------------|:---------------------|:-----------|
+| React 19 | Node.js | Vercel (frontend) |
+| JavaScript | Express 5 | Render (backend) |
+| React Router | MongoDB Atlas | MongoDB Atlas (base de datos) |
+| React Context API | Mongoose | |
+| HTML5 y CSS3 | bcrypt | |
+| Fetch API | JSON Web Tokens (JWT) | |
+| Create React App | Middlewares de autenticación y autorización | |
+| | dotenv | |
+
+---
+
+## Arquitectura
+
+El flujo completo es: **React + React Router + Context API → API REST Express → Mongoose → MongoDB Atlas**.
 
 ```mermaid
 flowchart LR
-    A["🖥️ /client<br/>React · puerto 3001"] -- "Fetch API<br/>HTTP · JSON" --> B["⚙️ /backend<br/>Express · puerto 3000"]
-    B -- "Mongoose" --> C[("🍃 MongoDB Atlas<br/>productos")]
+    subgraph Cliente["/client · React (puerto 3001)"]
+        R["React Router<br/>rutas públicas y privadas"]
+        A["AuthContext<br/>sesión y token"]
+        C["CartContext<br/>carrito"]
+        R --- A
+        R --- C
+    end
+
+    subgraph Servidor["/backend · Express (puerto 3000)"]
+        M["Middlewares<br/>logger · autenticación JWT · roles · errores"]
+        RT["Rutas<br/>usuarios · productos · pedidos"]
+        M --> RT
+    end
+
+    DB[("MongoDB Atlas<br/>usuarios · productos · pedidos")]
+
+    Cliente -- "Fetch API · JSON<br/>Authorization: Bearer token" --> Servidor
+    RT -- "Mongoose" --> DB
 ```
 
 | Aplicación | Carpeta | Puerto local | Rol |
 |:-----------|:--------|:------------:|:----|
 | Frontend | `/client` | `3001` | Interfaz de usuario en React |
-| Backend | `/backend` | `3000` | API REST del catálogo de productos |
+| Backend | `/backend` | `3000` | API REST: usuarios, productos y pedidos |
 | Base de datos | — | — | MongoDB Atlas, accedida mediante Mongoose |
 
----
+### Componentes principales
 
-## 📁 Estructura de carpetas
+- **`AuthContext`**: contexto global de autenticación. Gestiona el usuario autenticado y el token JWT, recupera la sesión a partir del token guardado en el almacenamiento local, y expone las funciones `login` y `logout`. El registro de usuarios se realiza desde `RegisterPage`. La navegación se adapta según haya o no un usuario autenticado y protege las rutas privadas.
+- **`CartContext`**: contexto global del carrito. Permite agregar y quitar productos, modificar cantidades y calcular totales, y persiste el estado en `localStorage`.
+- **Autenticación con JWT**: al iniciar sesión, el backend emite un token firmado. El cliente lo envía en la cabecera `Authorization: Bearer <token>` y el backend lo verifica en cada ruta protegida.
+- **Middlewares de autorización**: verifican el token y, en las operaciones administrativas, comprueban además que el usuario tenga rol de administrador.
+- **Modelos**: usuarios, productos y pedidos, definidos con Mongoose.
+- **Rutas de la API**: agrupadas por recurso (`/api/usuarios`, `/api/productos`, `/api/pedidos`).
+
+### Estructura de carpetas
 
 ```text
 /
 ├── client/                         # Frontend React
 │   ├── public/
 │   └── src/
-│       ├── components/
-│       │   ├── AdminAccessGuard.js
-│       │   ├── AdminKeyProvider.js
-│       │   ├── ContactForm.js
-│       │   ├── Footer.js
-│       │   ├── Navbar.js
-│       │   ├── ProductCard.js
-│       │   ├── ProductDetail.js
-│       │   ├── ProductForm.js
-│       │   └── ProductList.js
-│       ├── pages/
-│       │   ├── CatalogPage.js
-│       │   ├── ContactPage.js
-│       │   ├── CreateProductPage.js
-│       │   ├── EditProductPage.js
-│       │   ├── HomePage.js
-│       │   └── ProductDetailPage.js
+│       ├── components/             # Navbar, Footer, ProductCard, ProductList,
+│       │                           # ProductDetail, ProductForm, ContactForm, etc.
+│       ├── context/                # AuthContext y CartContext
+│       ├── pages/                  # Inicio, catálogo, detalle, contacto, carrito,
+│       │                           # login/registro, administración, perfil y pedidos
 │       ├── App.js
 │       └── index.js
 │
 └── backend/                        # API REST con Express
     ├── config/
-    │   └── db.js                  # Conexión a MongoDB Atlas
-    ├── models/
-    │   └── Product.js             # Modelo de productos con Mongoose
-    ├── middlewares/
-    │   ├── errorHandler.js
-    │   ├── logger.js
-    │   └── notFound.js
-    ├── routes/
-    │   └── productos.routes.js
+    │   └── db.js                   # Conexión a MongoDB Atlas
+    ├── models/                     # Modelos Mongoose: usuarios, productos y pedidos
+    ├── middlewares/                # Logger, autenticación/autorización, 404 y errores
+    ├── controllers/                # Lógica de usuarios, productos y pedidos
+    ├── routes/                     # Rutas de usuarios, productos y pedidos
     ├── index.js
     └── package.json
 ```
 
 ---
 
-## 🚀 Instalación y ejecución
+## Instalación y ejecución
 
-> El frontend y el backend se ejecutan en **terminales separadas**. Para ver el catálogo en el cliente, ambos deben estar corriendo.
+> El frontend y el backend se ejecutan en **terminales separadas**. Para usar la aplicación, ambos deben estar en funcionamiento.
 
 ### Requisitos
 
@@ -175,277 +155,216 @@ flowchart LR
 - npm `>= 9`
 - Una base de datos en MongoDB Atlas y su cadena de conexión
 
-### 1️⃣ Backend — puerto `3000`
+### 1. Backend (puerto `3000`)
 
-En la **Terminal 1**, seguí este orden:
-
-**1. Instalá las dependencias**
+En la **Terminal 1**:
 
 ```bash
 cd backend
 npm install
 ```
 
-**2. Configurá el archivo `.env`**
-
-Creá un archivo `.env` dentro de `/backend` y reemplazá los valores de ejemplo por los tuyos:
+Creá un archivo `.env` dentro de `/backend`:
 
 ```env
 PORT=3000
 MONGO_URI=tu_cadena_de_conexion
-ADMIN_API_KEY=tu_clave_de_api
-ADMIN_ACCESS_PASSWORD=tu_contrasena_de_acceso
+JWT_SECRET=un_secreto_largo_y_aleatorio
 ```
 
-**3. Iniciá el servidor**
-
-Recién después de instalar las dependencias y configurar el `.env`:
+Iniciá el servidor:
 
 ```bash
-npm run dev
+npm run dev     # desarrollo, con Nodemon
+# o bien
+npm start       # ejecución directa con Node
 ```
 
-También puede ejecutarse con `npm start`.
-
-### 2️⃣ Frontend — puerto `3001`
+### 2. Frontend (puerto `3001`)
 
 En la **Terminal 2**:
 
 ```bash
 cd client
 npm install
-npm start
 ```
 
-Creá un archivo `.env` dentro de `/client` con la URL de la API:
+Creá un archivo `.env` dentro de `/client`:
 
 ```env
 REACT_APP_API_URL=http://localhost:3000/api/productos
 ```
 
-> 🔒 No subas credenciales reales al repositorio: los archivos `.env` deben mantenerse fuera del control de versiones.
+Iniciá la aplicación:
+
+```bash
+npm start
+```
+
+### Variables de entorno
+
+| Aplicación | Variable | Descripción |
+|:-----------|:---------|:------------|
+| Backend | `PORT` | Puerto del servidor |
+| Backend | `MONGO_URI` | Cadena de conexión a MongoDB Atlas |
+| Backend | `JWT_SECRET` | Secreto utilizado para firmar y verificar los JWT |
+| Frontend | `REACT_APP_API_URL` | URL del endpoint de productos de la API |
+
+> No subas credenciales reales al repositorio: los archivos `.env` deben mantenerse fuera del control de versiones.
 
 ---
 
-## ✨ Funcionalidades principales
+## Funcionalidades
 
-### 🖥️ Frontend
+### Catálogo y administración
 
-- 📦 Catálogo de productos obtenido desde la API (`GET /api/productos`).
-- ⭐ Productos destacados.
-- 🔄 Manejo de estados de **loading**, **error** y **success**.
-- 🗂️ Renderizado de productos mediante `.map()` y `key`.
-- 🔍 Página de detalle de producto.
-- 🧭 Navegación entre páginas con **React Router**.
-- 🛒 Carrito de compras: agregar productos y contador en el `Navbar`.
-- 📝 Formulario de contacto controlado mediante `useState`.
-- ➕ Formularios para **crear** y **editar** productos.
-- 🗑️ Eliminación de productos.
-- 🔐 Acceso a Administración desde el menú.
-- 📱 Diseño responsive.
+- Catálogo obtenido desde MongoDB mediante una API REST.
+- Productos destacados.
+- Detalle individual de cada producto.
+- Operaciones CRUD de productos.
+- Acceso administrativo controlado por roles.
+- Operaciones administrativas protegidas mediante JWT.
 
-**Componentes principales**
+### Autenticación
 
-| Componente | Componente | Componente |
-|:----------:|:----------:|:----------:|
-| `Navbar` | `ProductList` | `ContactForm` |
-| `Footer` | `ProductCard` | `ProductDetail` |
+- Registro de usuarios.
+- Almacenamiento de contraseñas con hashing mediante bcrypt.
+- Inicio de sesión.
+- Generación y verificación de JWT.
+- Persistencia de la sesión mediante React Context y almacenamiento local del token.
+- Cierre de sesión.
+- Navegación condicional según el usuario autenticado.
+- Protección de rutas privadas.
 
-### ⚙️ Backend
+### Carrito de compras
 
-- 🩺 Endpoint de verificación del estado de la API.
-- 🍃 Conexión con **MongoDB Atlas** y modelos de **Mongoose**.
-- 💾 Persistencia de productos.
-- 🔁 Operaciones **CRUD** completas sobre el catálogo.
-- 🚫 Respuesta HTTP 404 para productos inexistentes y para rutas no definidas.
-- 🧾 Logging de método y URL de cada request.
-- 🛡️ Manejo centralizado de errores.
-- 🔐 Protección de las operaciones administrativas (ver [Administración y seguridad](#-administración-y-seguridad)).
+- Estado global mediante React Context API.
+- Agregar y quitar productos.
+- Modificar cantidades.
+- Cálculo de totales.
+- Persistencia del carrito en `localStorage`.
+- Finalización de compra para usuarios autenticados.
+- Vaciado automático del carrito luego de registrar correctamente el pedido.
+
+### Pedidos
+
+- Registro de pedidos mediante la API.
+- Asociación de cada pedido con el usuario autenticado.
+- Verificación de precios y stock desde el backend.
+- Actualización del inventario.
+- Protección frente a solicitudes de compra duplicadas mediante idempotencia.
+- Historial de compras del usuario.
+
+### Perfil
+
+- Datos de la cuenta autenticada.
+- Historial de pedidos con su estado y detalle.
+- Rutas `/perfil` y `/mis-pedidos`.
+- Redirección al login cuando no existe una sesión válida.
+
+### Otras características del frontend
+
+- Manejo de estados de carga, error y éxito al consumir la API.
+- Navegación con React Router.
+- Formulario de contacto controlado mediante `useState`.
+- Diseño responsive.
 
 ---
 
-## 📡 Documentación de la API
+## Documentación de la API
 
 **URL base local:** `http://localhost:3000` · **URL publicada:** `https://muebleria-hermanos-jota-scrd.onrender.com`
 
-| Método | Endpoint | Función | Autorización |
-|:------:|:---------|:--------|:-------------|
-| `GET` | `/` | Comprueba que la API está funcionando | Pública |
-| `GET` | `/api/productos` | Obtiene todos los productos | Pública |
-| `GET` | `/api/productos/:id` | Obtiene un producto por su identificador | Pública |
-| `POST` | `/api/productos` | Crea un producto | Requiere `x-admin-key` |
-| `PUT` | `/api/productos/:id` | Actualiza un producto | Requiere `x-admin-key` |
-| `DELETE` | `/api/productos/:id` | Elimina un producto | Requiere `x-admin-key` |
-| `POST` | `/api/admin/verificar-acceso` | Verifica la contraseña para acceder a Administración | Recibe `contrasena` en el cuerpo JSON |
+### Autenticación en las solicitudes
 
-> Los productos utilizan el identificador `_id` generado por MongoDB, no identificadores numéricos.
+Las rutas protegidas requieren el token JWT obtenido al iniciar sesión, enviado en la cabecera `Authorization`:
 
-<details>
-<summary><b><code>GET /</code></b> — Verificación de la API</summary>
-
-<br>
-
-```bash
-curl http://localhost:3000/
+```http
+Authorization: Bearer <token>
 ```
 
-**Respuesta `200`**
+### Endpoints
 
-```json
-{ "mensaje": "API Mueblería Jota funcionando" }
-```
+| Método | Endpoint | Función | Acceso |
+|:------:|:---------|:--------|:-------|
+| `POST` | `/api/usuarios/registro` | Registra un nuevo usuario | Pública |
+| `POST` | `/api/usuarios/login` | Inicia sesión y devuelve un JWT | Pública |
+| `GET` | `/api/usuarios/perfil` | Devuelve los datos del usuario autenticado | Requiere JWT |
+| `GET` | `/api/productos` | Lista todos los productos | Pública |
+| `GET` | `/api/productos/:id` | Obtiene un producto por su `_id` | Pública |
+| `POST` | `/api/productos` | Crea un producto | Requiere JWT y rol de administrador |
+| `PUT` | `/api/productos/:id` | Actualiza un producto | Requiere JWT y rol de administrador |
+| `DELETE` | `/api/productos/:id` | Elimina un producto | Requiere JWT y rol de administrador |
+| `POST` | `/api/pedidos` | Registra un pedido del usuario autenticado | Requiere JWT |
+| `GET` | `/api/pedidos/mis-pedidos` | Lista los pedidos del usuario autenticado | Requiere JWT |
 
-</details>
+> Los recursos utilizan el identificador `_id` generado por MongoDB, no identificadores numéricos.
 
-<details>
-<summary><b><code>GET /api/productos</code></b> y <b><code>GET /api/productos/:id</code></b> — Consulta de productos</summary>
-
-<br>
+### Ejemplos
 
 ```bash
-# Listado completo
+# Listar productos (público)
 curl http://localhost:3000/api/productos
 
-# Un producto por su _id
-curl http://localhost:3000/api/productos/ID_DEL_PRODUCTO
-```
-
-**Respuesta `200`** (respuesta simplificada)
-
-```json
-{
-  "_id": "<_id>",
-  "nombre": "Sofá Patagonia",
-  "categoria": "Living",
-  "precio": 185000,
-  "destacado": true
-}
-```
-
-> Respuesta simplificada: el documento completo incluye además otros campos del modelo. El listado devuelve una colección de productos con esta forma.
-
-**Respuesta `400`** (identificador con formato inválido)
-
-```json
-{ "error": "Identificador de producto inválido" }
-```
-
-**Respuesta `404`** (producto inexistente)
-
-```json
-{ "error": "Producto no encontrado" }
-```
-
-</details>
-
-<details>
-<summary><b><code>POST</code> · <code>PUT</code> · <code>DELETE</code> <code>/api/productos</code></b> — Operaciones administrativas</summary>
-
-<br>
-
-Estas operaciones requieren la cabecera `x-admin-key` con el valor de `ADMIN_API_KEY`.
-
-```bash
-# Crear
-curl -X POST http://localhost:3000/api/productos \
+# Iniciar sesión
+curl -X POST http://localhost:3000/api/usuarios/login \
   -H "Content-Type: application/json" \
-  -H "x-admin-key: tu_clave_de_api" \
-  -d '{
-    "nombre": "Sofá Patagonia",
-    "descripcion": "Sofá de tres cuerpos",
-    "precio": 185000,
-    "stock": 5
-  }'
+  -d '{ "email": "usuario@ejemplo.com", "password": "tu_contrasena" }'
 
-# Editar
-curl -X PUT http://localhost:3000/api/productos/ID_DEL_PRODUCTO \
-  -H "Content-Type: application/json" \
-  -H "x-admin-key: tu_clave_de_api" \
-  -d '{ "precio": 190000 }'
-
-# Eliminar
-curl -X DELETE http://localhost:3000/api/productos/ID_DEL_PRODUCTO \
-  -H "x-admin-key: tu_clave_de_api"
+# Consultar el perfil con el token recibido
+curl http://localhost:3000/api/usuarios/perfil \
+  -H "Authorization: Bearer <token>"
 ```
 
-**Campos de creación**
+> Los nombres exactos de los campos del cuerpo de cada solicitud (registro, login y pedidos) y el formato de cada respuesta están definidos en los controladores del backend.
 
-| Campo | Obligatorio |
-|:------|:-----------:|
-| `nombre` | Sí |
-| `precio` | Sí |
-| `descripcion` | No |
-| `stock` | No |
-| `imagenUrl` | No |
+### Códigos de error habituales
 
-</details>
-
-<details>
-<summary><b><code>POST /api/admin/verificar-acceso</code></b> — Acceso a Administración</summary>
-
-<br>
-
-Recibe `contrasena` en el cuerpo JSON y la comprueba en el backend contra `ADMIN_ACCESS_PASSWORD`. Se utiliza para habilitar la interfaz de Administración.
-
-```bash
-curl -X POST http://localhost:3000/api/admin/verificar-acceso \
-  -H "Content-Type: application/json" \
-  -d '{ "contrasena": "tu_contrasena_de_acceso" }'
-```
-
-</details>
-
-<details>
-<summary><b>Ruta inexistente</b> — Cualquier path no definido</summary>
-
-<br>
-
-```bash
-curl http://localhost:3000/ruta-que-no-existe
-```
-
-**Respuesta `404`**
-
-```json
-{ "error": "Ruta no encontrada" }
-```
-
-</details>
+| Código | Situación |
+|:------:|:----------|
+| `400` | Datos inválidos o identificador con formato incorrecto |
+| `401` | Token ausente, inválido o vencido |
+| `403` | Usuario autenticado sin permisos de administrador |
+| `404` | Recurso o ruta inexistente |
 
 ---
 
-## 🔐 Administración y seguridad
+## Seguridad
 
-El proyecto utiliza dos variables de entorno independientes:
+Medidas efectivamente implementadas en el proyecto:
 
-| Variable | Función |
-|:---------|:--------|
-| `ADMIN_ACCESS_PASSWORD` | Contraseña para acceder a la interfaz de Administración. Se verifica en el backend mediante `POST /api/admin/verificar-acceso`. |
-| `ADMIN_API_KEY` | Protege las operaciones `POST`, `PUT` y `DELETE` de productos mediante la cabecera `x-admin-key`. |
+- **Hashing de contraseñas**: las contraseñas se almacenan hasheadas con bcrypt; no se guardan en texto plano.
+- **Autenticación con JWT**: el backend emite tokens firmados con `JWT_SECRET` y los verifica en las rutas protegidas.
+- **Autorización por roles**: las operaciones de creación, edición y eliminación de productos solo están disponibles para usuarios con rol de administrador.
+- **Protección de endpoints**: las rutas de perfil y pedidos exigen un usuario autenticado, y cada usuario accede únicamente a sus propios pedidos.
+- **Variables de entorno**: la cadena de conexión y el secreto de firma se definen en archivos `.env` mediante dotenv, fuera del código y del control de versiones.
+- **Validación de datos y stock**: el backend verifica los datos recibidos, los precios y el stock disponible al registrar un pedido, sin confiar en los valores enviados por el cliente.
+- **Idempotencia en pedidos**: el registro de pedidos incorpora protección frente a solicitudes de compra duplicadas.
 
-> ⚠️ Es una **protección básica** pensada para este proyecto académico. No constituye un sistema de autenticación completo: no incluye usuarios registrados ni sesiones seguras.
+> Este es un proyecto académico. Las medidas descriptas corresponden al alcance del curso y no constituyen una auditoría de seguridad completa.
 
 ---
 
-## 🧠 Decisiones de arquitectura
+## Decisiones de arquitectura
 
 | Decisión | Detalle |
 |:---------|:--------|
 | **Monorepo** | `/client` y `/backend` conviven en un mismo repositorio como aplicaciones separadas, cada una con su propio `package.json`, instalación y puerto. |
-| **Persistencia en MongoDB Atlas** | Los productos se almacenan en MongoDB Atlas y se acceden mediante modelos de Mongoose, reemplazando los datos en memoria de la versión inicial. |
-| **API con `express.Router`** | Las rutas del catálogo se definen en `routes/productos.routes.js` y se montan desde `index.js`. |
-| **Middlewares dedicados** | Logging de método y URL, middleware 404 y middleware centralizado de errores, cada uno en su propio archivo dentro de `middlewares/`. |
-| **`express.json()`** | La API incorpora el parseo de JSON como middleware. |
+| **Persistencia en MongoDB Atlas** | Usuarios, productos y pedidos se almacenan en MongoDB Atlas y se acceden mediante modelos de Mongoose. |
+| **Autenticación stateless con JWT** | El servidor no guarda sesiones: el cliente envía el token en cada solicitud protegida. |
+| **Estado global con Context API** | `AuthContext` gestiona la sesión y `CartContext` el carrito, sin librerías adicionales de estado. |
+| **Autorización por roles** | Un middleware distingue entre usuarios comunes y administradores para proteger las operaciones sobre el catálogo. |
+| **Validación en el backend** | Los precios y el stock se verifican en el servidor al registrar un pedido. |
+| **Idempotencia en pedidos** | Evita que una misma solicitud de compra genere pedidos duplicados. |
+| **Middlewares dedicados** | Logging, autenticación y autorización, 404 y manejo centralizado de errores, cada uno en su propio archivo. |
 | **ES Modules** | El backend utiliza ES Modules. |
-| **Configuración por variables de entorno** | La conexión a la base de datos y las claves de administración se definen en archivos `.env` mediante Dotenv, fuera del código. |
-| **Protección básica de operaciones administrativas** | Contraseña de acceso verificada en el backend y clave de API en la cabecera `x-admin-key` para crear, editar y eliminar productos. |
-| **Navegación con React Router** | El frontend se organiza en páginas, como la de detalle de producto, mediante rutas. |
-| **Estados de la petición** | El frontend contempla los estados de loading, error y success al consumir la API. |
+| **Configuración por variables de entorno** | Los secretos y la conexión a la base de datos no forman parte del código. |
+| **Navegación con React Router** | El frontend se organiza en páginas mediante rutas, con rutas privadas protegidas por la sesión. |
 | **Despliegue separado** | Frontend en Vercel, backend en Render y base de datos en MongoDB Atlas. |
 
 ---
 
-## 📜 Scripts disponibles
+## Scripts disponibles
 
 ### Frontend (`/client`)
 
@@ -466,7 +385,7 @@ El proyecto utiliza dos variables de entorno independientes:
 
 <div align="center">
 
-Proyecto desarrollado por **Lautaro Iturrieta**, **Evelyn Noya Fraga** y **Matheo Dougan**
-como parte de un curso de Desarrollo Full Stack.
+Proyecto desarrollado por **Lautaro Iturrieta** y **Evelyn Noya Fraga**
+como parte del curso de Desarrollo Full Stack.
 
 </div>
