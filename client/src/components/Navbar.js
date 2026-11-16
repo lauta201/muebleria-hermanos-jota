@@ -144,7 +144,9 @@ function Navbar({ cantidadCarrito }) {
           aria-expanded={menuCuentaAbierto}
           aria-controls="menuCuenta"
           onClick={() => {
-            setMenuCuentaAbierto((abierto) => !abierto);
+            setMenuCuentaAbierto(
+              (abierto) => !abierto
+            );
             cerrarMenu();
           }}
         >
@@ -243,17 +245,21 @@ function Navbar({ cantidadCarrito }) {
         )}
       </div>
 
-      {/* Carrito existente */}
-      <button
+      {/* Acceso al carrito de compras */}
+      <Link
+        to="/carrito"
         className="carrito-btn"
-        type="button"
-        aria-label="Ver carrito"
+        aria-label={`Ver carrito, ${cantidadCarrito} productos`}
+        onClick={() => {
+          cerrarMenu();
+          setMenuCuentaAbierto(false);
+        }}
       >
         🛒
         <span className="carrito-contador">
           {cantidadCarrito}
         </span>
-      </button>
+      </Link>
 
       {/* Menú móvil */}
       <button
@@ -267,7 +273,9 @@ function Navbar({ cantidadCarrito }) {
             : "Abrir menú de navegación"
         }
         onClick={() => {
-          setMenuAbierto((abierto) => !abierto);
+          setMenuAbierto(
+            (abierto) => !abierto
+          );
           setMenuCuentaAbierto(false);
         }}
       >

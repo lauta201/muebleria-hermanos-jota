@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import ProductList from "./components/ProductList";
 
 import { useAuth } from "./context/AuthContext";
+import { useCart } from "./context/CartContext";
 
 import HomePage from "./pages/HomePage";
 import CatalogPage from "./pages/CatalogPage";
@@ -21,6 +22,7 @@ import CreateProductPage from "./pages/CreateProductPage";
 import EditProductPage from "./pages/EditProductPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import CartPage from "./pages/CartPage";
 
 import "./App.css";
 
@@ -32,21 +34,20 @@ function AppContenido() {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
+  // Estado global del carrito mediante Context API.
+  const {
+    agregarAlCarrito,
+    cantidadCarrito,
+  } = useCart();
+
+  // Estado del catálogo.
   const [productos, setProductos] = useState([]);
   const [estadoCarga, setEstadoCarga] = useState("carga");
   const [mensajeError, setMensajeError] = useState("");
-  const [carrito, setCarrito] = useState([]);
 
   // Verificar el rol del usuario autenticado.
   const esAdministrador =
     currentUser?.roles?.includes("admin") ?? false;
-
-  // Estado básico del carrito.
-  const cantidadCarrito = carrito.length;
-
-  function agregarAlCarrito(producto) {
-    setCarrito((actual) => [...actual, producto]);
-  }
 
   // Agregar un producto al catálogo.
   function agregarProductoAlCatalogo(productoCreado) {
@@ -70,7 +71,6 @@ function AppContenido() {
 
   // Eliminar un producto utilizando el JWT del administrador.
   async function eliminarProducto(producto) {
-    // Comprobar los permisos antes de continuar.
     if (!esAdministrador) {
       window.alert(
         "Tu cuenta no tiene permisos para eliminar productos."
@@ -132,7 +132,7 @@ function AppContenido() {
         );
       }
 
-      // Actualizar el catálogo solo si el backend eliminó el producto.
+      // Actualizar el catálogo después de eliminar en MongoDB.
       setProductos((productosActuales) =>
         productosActuales.filter(
           (item) => (item._id || item.id) !== id
@@ -353,6 +353,12 @@ function AppContenido() {
             path="/contacto"
             element={<ContactPage />}
           />
+
+          {/* Carrito de compras */}
+<Route
+  path="/carrito"
+  element={<CartPage />}
+/>
 
           {/* Registro de usuarios */}
           <Route
