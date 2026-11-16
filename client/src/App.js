@@ -356,16 +356,22 @@ function AppContenido() {
           />
 
           {/* Carrito de compras */}
-<Route
-  path="/carrito"
-  element={<CartPage />}
-/>
+          <Route
+            path="/carrito"
+            element={<CartPage />}
+          />
 
-{/* Perfil del usuario */}
-<Route
-  path="/perfil"
-  element={<ProfilePage />}
-/>
+          {/* Perfil del usuario */}
+          <Route
+            path="/perfil"
+            element={<ProfilePage />}
+          />
+
+          {/* Historial de pedidos del usuario */}
+          <Route
+            path="/mis-pedidos"
+            element={<ProfilePage />}
+          />
 
           {/* Registro de usuarios */}
           <Route

@@ -1,6 +1,10 @@
 
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
 import "./ProfilePage.css";
@@ -38,6 +42,7 @@ function formatearFecha(fecha) {
 
 function ProfilePage() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { currentUser, cargandoSesion } = useAuth();
 
@@ -51,15 +56,21 @@ function ProfilePage() {
       navigate("/login", {
         replace: true,
         state: {
-          from: "/perfil",
+          from: location.pathname,
         },
       });
     }
-  }, [currentUser, cargandoSesion, navigate]);
+  }, [
+    currentUser,
+    cargandoSesion,
+    navigate,
+    location.pathname,
+  ]);
 
   // Consultar los pedidos del usuario autenticado.
   useEffect(() => {
     if (cargandoSesion || !currentUser) {
+      setPedidos([]);
       return;
     }
 
@@ -68,6 +79,7 @@ function ProfilePage() {
     async function cargarPedidos() {
       setCargandoPedidos(true);
       setErrorPedidos("");
+      setPedidos([]);
 
       try {
         const token = localStorage.getItem("authToken");
@@ -91,18 +103,24 @@ function ProfilePage() {
           );
         }
 
-        setPedidos(
-          Array.isArray(datos.pedidos) ? datos.pedidos : []
-        );
+        if (!controlador.signal.aborted) {
+          setPedidos(
+            Array.isArray(datos.pedidos)
+              ? datos.pedidos
+              : []
+          );
+        }
       } catch (error) {
         if (error.name === "AbortError") {
           return;
         }
 
-        setErrorPedidos(
-          error.message ||
-            "No pudimos cargar el historial de pedidos."
-        );
+        if (!controlador.signal.aborted) {
+          setErrorPedidos(
+            error.message ||
+              "No pudimos cargar el historial de pedidos."
+          );
+        }
       } finally {
         if (!controlador.signal.aborted) {
           setCargandoPedidos(false);
@@ -130,7 +148,9 @@ function ProfilePage() {
   return (
     <section className="seccion perfil-pagina">
       <div className="seccion-cabecera">
-        <h1 className="seccion-titulo">Mi perfil</h1>
+        <h1 className="seccion-titulo">
+          Mi perfil
+        </h1>
 
         <p className="seccion-subtitulo">
           Consultá los datos de tu cuenta y tus compras
@@ -190,13 +210,19 @@ function ProfilePage() {
           </div>
 
           {cargandoPedidos && (
-            <p role="status" className="perfil-mensaje">
+            <p
+              role="status"
+              className="perfil-mensaje"
+            >
               Cargando tus pedidos...
             </p>
           )}
 
-          {errorPedidos && (
-            <p role="alert" className="perfil-error">
+          {errorPedidos && !cargandoPedidos && (
+            <p
+              role="alert"
+              className="perfil-error"
+            >
               {errorPedidos}
             </p>
           )}
@@ -205,7 +231,9 @@ function ProfilePage() {
             !errorPedidos &&
             pedidos.length === 0 && (
               <div className="perfil-sin-pedidos">
-                <h3>Todavía no realizaste pedidos</h3>
+                <h3>
+                  Todavía no realizaste pedidos
+                </h3>
 
                 <p>
                   Cuando realices tu primera compra,
@@ -241,7 +269,9 @@ function ProfilePage() {
                         </p>
 
                         <p className="perfil-pedido-fecha">
-                          {formatearFecha(pedido.createdAt)}
+                          {formatearFecha(
+                            pedido.createdAt
+                          )}
                         </p>
                       </div>
 
@@ -251,26 +281,35 @@ function ProfilePage() {
                     </div>
 
                     <ul className="perfil-pedido-productos">
-                      {pedido.productos.map((item, indice) => (
-                        <li
-                          key={`${item.producto}-${indice}`}
-                        >
-                          <span>
-                            {item.nombre} × {item.cantidad}
-                          </span>
+                      {pedido.productos.map(
+                        (item, indice) => (
+                          <li
+                            key={`${item.producto}-${indice}`}
+                          >
+                            <span>
+                              {item.nombre} ×{" "}
+                              {item.cantidad}
+                            </span>
 
-                          <span>
-                            {formatearPrecio(item.subtotal)}
-                          </span>
-                        </li>
-                      ))}
+                            <span>
+                              {formatearPrecio(
+                                item.subtotal
+                              )}
+                            </span>
+                          </li>
+                        )
+                      )}
                     </ul>
 
                     <div className="perfil-pedido-total">
-                      <strong>Total del pedido</strong>
+                      <strong>
+                        Total del pedido
+                      </strong>
 
                       <strong>
-                        {formatearPrecio(pedido.total)}
+                        {formatearPrecio(
+                          pedido.total
+                        )}
                       </strong>
                     </div>
                   </article>
