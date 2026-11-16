@@ -1,0 +1,167 @@
+
+/* Página de registro — Hermanos Jota */
+
+.registro-pagina {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    background-color: #f7f5f1;
+  }
+  
+  .registro-contenedor {
+    width: 100%;
+    max-width: 460px;
+  }
+  
+  .registro-introduccion {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  
+  .registro-etiqueta {
+    display: block;
+    margin-bottom: 16px;
+    color: #8a755c;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+  }
+  
+  .registro-introduccion h1 {
+    margin: 0 0 14px;
+    color: #29251f;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(32px, 4vw, 42px);
+    font-weight: 400;
+  }
+  
+  .registro-introduccion p {
+    margin: 0;
+    color: #706a63;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  
+  .registro-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 38px;
+    background: #ffffff;
+    border: 1px solid #e6e1d9;
+  }
+  
+  .registro-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  
+  .registro-campo label {
+    color: #38332d;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  
+  .registro-campo input {
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 14px;
+    border: 1px solid #d7d1c8;
+    border-radius: 2px;
+    background: #ffffff;
+    color: #29251f;
+    font: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+  }
+  
+  .registro-campo input:focus {
+    outline: 2px solid transparent;
+    border-color: #806a50;
+    box-shadow: 0 0 0 2px rgba(128, 106, 80, 0.15);
+  }
+  
+  .registro-ayuda {
+    margin: 0;
+    color: #817b73;
+    font-size: 12px;
+  }
+  
+  .registro-error {
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid #e2b9b4;
+    background: #fff5f3;
+    color: #923b32;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  
+  .registro-boton {
+    min-height: 48px;
+    border: 1px solid #38332d;
+    border-radius: 2px;
+    background: #38332d;
+    color: #ffffff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .registro-boton:hover:not(:disabled) {
+    background: #5c5043;
+  }
+  
+  .registro-boton:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+  
+  .registro-acceso {
+    margin: 0;
+    text-align: center;
+    color: #706a63;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  
+  .registro-acceso a {
+    color: #493a2a;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  
+  @media (max-width: 600px) {
+    .registro-pagina {
+      padding: 56px 18px;
+    }
+  
+    .registro-formulario {
+      padding: 28px 22px;
+    }
+  
+    .registro-introduccion {
+      margin-bottom: 28px;
+    }
+  }
+  
+
+/* Mensaje de registro exitoso */
+
+.registro-exito {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #c5d5c4;
+  background-color: #f2f7f0;
+  color: #3d6540;
+  font-size: 13px;
+  line-height: 1.6;
+}

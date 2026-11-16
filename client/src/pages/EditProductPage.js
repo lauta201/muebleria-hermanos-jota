@@ -1,8 +1,8 @@
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import ProductForm from "../components/ProductForm";
-import { useAdminKey } from "../components/AdminKeyProvider";
 
 const URL_PRODUCTOS =
   process.env.REACT_APP_API_URL ||
@@ -11,13 +11,13 @@ const URL_PRODUCTOS =
 function EditProductPage({ onProductoActualizado }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const solicitarClave = useAdminKey();
 
   const [producto, setProducto] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState("");
 
+  // Obtener los datos del producto que queremos editar.
   useEffect(() => {
     const controlador = new AbortController();
 
@@ -29,10 +29,11 @@ function EditProductPage({ onProductoActualizado }) {
         );
 
         if (!respuesta.ok) {
-          throw new Error("No se pudo obtener el producto");
+          throw new Error("No se pudo obtener el producto.");
         }
 
         const datos = await respuesta.json();
+
         setProducto(datos);
       } catch (error) {
         if (error.name !== "AbortError") {
@@ -50,14 +51,16 @@ function EditProductPage({ onProductoActualizado }) {
     return () => controlador.abort();
   }, [id]);
 
+  // Actualizar el producto utilizando el JWT del administrador.
   async function actualizarProducto(datosProducto) {
     setError("");
 
-    // Solicita la contraseña de Administración.
-    // El backend la verifica y devuelve un token autorizado.
-    const token = await solicitarClave();
+    const token = localStorage.getItem("authToken");
 
-    if (token === null) {
+    if (!token) {
+      setError(
+        "Debés iniciar sesión como administrador para editar productos."
+      );
       return;
     }
 
@@ -77,17 +80,26 @@ function EditProductPage({ onProductoActualizado }) {
       );
 
       if (!respuesta.ok) {
-        if (
-          respuesta.status === 401 ||
-          respuesta.status === 403
-        ) {
+        if (respuesta.status === 401) {
           throw new Error(
-            "La autorización de Administración no es válida o venció."
+            "Tu sesión expiró o no es válida. Volvé a iniciar sesión."
           );
         }
 
+        if (respuesta.status === 403) {
+          throw new Error(
+            "Tu cuenta no tiene permisos para editar productos."
+          );
+        }
+
+        const datosError = await respuesta
+          .json()
+          .catch(() => null);
+
         throw new Error(
-          "No se pudo actualizar el producto."
+          datosError?.mensaje ||
+            datosError?.error ||
+            "No se pudo actualizar el producto."
         );
       }
 

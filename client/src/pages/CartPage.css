@@ -1,0 +1,339 @@
+
+/* =========================================
+   CARRITO DE COMPRAS — HERMANOS JOTA
+   ========================================= */
+
+   .carrito-pagina {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  
+  /* Carrito vacío */
+  
+  .carrito-vacio {
+    max-width: 580px;
+    margin: 36px auto;
+    padding: 56px 32px;
+    background: var(--color-blanco);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    text-align: center;
+  }
+  
+  .carrito-vacio h2 {
+    font-family: var(--fuente-titulo);
+    color: var(--color-marron-oscuro);
+    margin-bottom: 12px;
+  }
+  
+  .carrito-vacio p {
+    color: var(--color-texto-suave);
+    margin-bottom: 28px;
+  }
+  
+  /* Distribución de productos y resumen */
+  
+  .carrito-contenido {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+    gap: 28px;
+  }
+  
+  /* Productos seleccionados */
+  
+  .carrito-productos,
+  .carrito-resumen {
+    background: var(--color-blanco);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    box-shadow: var(--sombra-card);
+  }
+  
+  .carrito-productos {
+    padding: 28px;
+  }
+  
+  .carrito-lista-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .carrito-lista-cabecera h2,
+  .carrito-resumen h2 {
+    font-family: var(--fuente-titulo);
+    font-size: 1.25rem;
+    color: var(--color-marron-oscuro);
+  }
+  
+  .carrito-lista-cabecera h2 span {
+    font-family: var(--fuente-cuerpo);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--color-texto-suave);
+  }
+  
+  .carrito-vaciar,
+  .carrito-quitar {
+    background: transparent;
+    border: 0;
+    color: var(--color-texto-suave);
+    font-size: 0.82rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  
+  .carrito-vaciar:hover,
+  .carrito-quitar:hover {
+    color: var(--color-error);
+  }
+  
+  /* Cada producto del carrito */
+  
+  .carrito-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--color-borde);
+  }
+  
+  .carrito-item:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  /* Fotografía compacta del producto */
+  
+  .carrito-item-imagen {
+    display: block;
+    width: 80px;
+    height: 80px;
+    flex: 0 0 80px;
+    overflow: hidden;
+    background: #f5f1eb;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  
+  .carrito-item-imagen img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .carrito-item-imagen span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #777;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  
+  /* Información del producto */
+  
+  .carrito-item-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    min-width: 0;
+  }
+  
+  .carrito-item-nombre {
+    font-family: var(--fuente-titulo);
+    font-size: 1.12rem;
+    font-weight: 600;
+    color: var(--color-marron-oscuro);
+  }
+  
+  .carrito-item-nombre:hover {
+    color: var(--color-marron-claro);
+  }
+  
+  .carrito-item-precio {
+    font-size: 0.87rem;
+    color: var(--color-texto-suave);
+  }
+  
+  .carrito-item-acciones {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  
+  /* Controles de cantidad */
+  
+  .carrito-cantidad {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .carrito-cantidad button {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    background: var(--color-crema);
+    color: var(--color-marron-oscuro);
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .carrito-cantidad button:hover:not(:disabled) {
+    background: var(--color-borde);
+  }
+  
+  .carrito-cantidad button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  
+  .carrito-cantidad span {
+    min-width: 42px;
+    padding: 0 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  .carrito-item-subtotal {
+    color: var(--color-marron-oscuro);
+    font-size: 1rem;
+  }
+  
+  /* Resumen de compra */
+  
+  .carrito-resumen {
+    padding: 28px;
+  }
+  
+  .carrito-resumen h2 {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-borde);
+  }
+  
+  .carrito-resumen-fila,
+  .carrito-resumen-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  
+  .carrito-resumen-fila {
+    padding: 24px 0;
+    color: var(--color-texto-suave);
+    font-size: 0.9rem;
+  }
+  
+  .carrito-resumen-total {
+    padding: 20px 0;
+    border-top: 1px solid var(--color-borde);
+    color: var(--color-marron-oscuro);
+    font-size: 1.12rem;
+  }
+  
+  .carrito-resumen-nota {
+    margin: 8px 0 24px;
+    color: var(--color-texto-suave);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  
+  .carrito-finalizar {
+    width: 100%;
+  }
+  
+  .carrito-finalizar:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .carrito-seguir-comprando {
+    display: block;
+    margin-top: 20px;
+    color: var(--color-marron-medio);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .carrito-seguir-comprando:hover {
+    text-decoration: underline;
+  }
+  
+  /* Accesibilidad */
+  
+  .carrito-vaciar:focus-visible,
+  .carrito-quitar:focus-visible,
+  .carrito-cantidad button:focus-visible,
+  .carrito-item-nombre:focus-visible,
+  .carrito-item-imagen:focus-visible {
+    outline: 3px solid var(--color-caramelo);
+    outline-offset: 3px;
+  }
+  
+  /* Tablets */
+  
+  @media (max-width: 900px) {
+    .carrito-contenido {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Celulares */
+  
+  @media (max-width: 600px) {
+    .carrito-productos,
+    .carrito-resumen {
+      padding: 20px;
+    }
+  
+    .carrito-lista-cabecera {
+      align-items: flex-start;
+    }
+  
+    .carrito-lista-cabecera h2 {
+      font-size: 1.05rem;
+    }
+  
+    .carrito-item {
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1fr);
+      align-items: start;
+      gap: 14px;
+    }
+  
+    .carrito-item-imagen {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .carrito-item-info {
+      width: 100%;
+    }
+  
+    .carrito-item-acciones {
+      grid-column: 1 / -1;
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  

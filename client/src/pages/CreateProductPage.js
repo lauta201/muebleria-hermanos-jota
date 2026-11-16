@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -16,13 +17,12 @@ function CreateProductPage({ onProductoCreado }) {
   async function crearProducto(producto) {
     setError("");
 
-    const token = sessionStorage.getItem(
-      "adminSessionToken"
-    );
+    // Obtener el JWT del usuario autenticado.
+    const token = localStorage.getItem("authToken");
 
     if (!token) {
       setError(
-        "Tu sesión de administración no está activa. Volvé a ingresar."
+        "Debés iniciar sesión como administrador para crear productos."
       );
       return;
     }
@@ -40,19 +40,25 @@ function CreateProductPage({ onProductoCreado }) {
       });
 
       if (!respuesta.ok) {
-        if (
-          respuesta.status === 401 ||
-          respuesta.status === 403
-        ) {
-          sessionStorage.removeItem("adminSessionToken");
-          sessionStorage.removeItem("adminSessionExpiration");
-
+        if (respuesta.status === 401) {
           throw new Error(
-            "Tu sesión de administración venció o no es válida. Volvé a ingresar."
+            "Tu sesión expiró o no es válida. Volvé a iniciar sesión."
           );
         }
 
-        throw new Error("No se pudo crear el producto.");
+        if (respuesta.status === 403) {
+          throw new Error(
+            "Tu cuenta no tiene permisos para crear productos."
+          );
+        }
+
+        const datosError = await respuesta.json().catch(() => null);
+
+        throw new Error(
+          datosError?.mensaje ||
+            datosError?.error ||
+            "No se pudo crear el producto."
+        );
       }
 
       const productoCreado = await respuesta.json();
