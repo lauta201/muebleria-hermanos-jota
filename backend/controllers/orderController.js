@@ -185,7 +185,7 @@ export async function crearPedido(req, res) {
           total += subtotal;
         }
 
-        // Registrar pedido y descuento de stock juntos.
+        // Registrar el pedido y el descuento de stock juntos.
         const pedidos = await Order.create(
           [
             {
@@ -254,6 +254,37 @@ export async function crearPedido(req, res) {
     return res.status(500).json({
       mensaje:
         "No se pudo confirmar el pedido. Consultá su estado antes de intentar una nueva compra.",
+    });
+  }
+}
+
+// Obtener el historial de pedidos del usuario autenticado.
+export async function obtenerMisPedidos(req, res) {
+  try {
+    // El identificador proviene del JWT verificado.
+    const usuarioId = req.usuario.id;
+
+    // Consultar exclusivamente los pedidos de este usuario.
+    const pedidos = await Order.find({
+      usuario: usuarioId,
+    })
+      .select("-solicitudId -__v")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return res.status(200).json({
+      mensaje: "Historial de pedidos obtenido correctamente.",
+      pedidos,
+    });
+  } catch (error) {
+    console.error(
+      "Error al obtener el historial de pedidos:",
+      error
+    );
+
+    return res.status(500).json({
+      mensaje:
+        "No pudimos obtener tus pedidos. Intentá nuevamente.",
     });
   }
 }
